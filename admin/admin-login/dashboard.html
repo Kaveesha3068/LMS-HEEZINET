@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EduLMS Dashboard - Learning Management System Admin Panel">
+    <meta name="keywords" content="dashboard, LMS, learning management system, education, admin panel, EduLMS">
+    <meta name="author" content="EduLMS">
+    <title>EduLMS - Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="../../frontend/assets/images/EduLMS-icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <!-- Sidebar -->
+   <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+
+<div class="container d-flex flex-row" style="min-height:100vh;width:100vw;max-width:100vw;overflow:hidden;background:#fff;">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="../../frontend/assets/images/logo.png" alt="logo" width="32" height="32">
+            <span>EduLMS</span>
+        </div>
+
+        <div class="nav-menu">
+            <a href="dashboard.html" class="nav-item active" style="font-weight: bold;">📊 Dashboard</a>
+            <a href="preload.html" class="nav-item ">🔄 Preload Students</a>
+            <a href="attendance.html" class="nav-item">📋 Attendance</a>
+            <a href="Messages.html" class="nav-item">💬 Messages</a>
+            <a href="calendar.html" class="nav-item">📅 Calendar</a>
+            <a href="Enrollments.html" class="nav-item">📋 Enrollments</a>
+            <a href="Courses.html" class="nav-item " style="font-weight: bold;">📚 Courses</a>
+            <a href="Instructors.html" class="nav-item ">👨‍🏫 Instructors</a>
+             <a href="Students.html" class="nav-item ">👥 Students</a>
+            <a href="preload.html" class="nav-item" style="font-weight: bold;">🔄 Preload Students</a>
+            <a href="Financials.html" class="nav-item">💰 Financials</a>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="sign-out-btn" onclick="handleSignOut()">
+                <span class="sign-out-icon">🚪</span>
+                <span class="sign-out-text">Sign Out</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h2 class="mb-1">Dashboard</h2>
+                 <div class="text-muted small">
+                        <span class="text-primary">Dashboard</span>
+                    </div>
+                <p class="text-muted mb-0">Hello Orlando, welcome back!</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="position-relative">
+                    <input type="text" class="form-control" placeholder="Search anything" style="width: 300px; padding-right: 40px;">
+                    <span class="material-symbols-outlined position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 24px;">search</span>
+                </div>
+                    <button class="btn btn-outline-secondary rounded-circle position-relative" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../../frontend/assets/images/student.png" alt="Notification" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">2</span>
+                    </button>
+                <div class="d-flex align-items-center gap-2">
+                    <!-- Profile image removed as requested -->
+                    <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stats-card" style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%); color: white;">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
+                            <span class="material-symbols-outlined fs-2 text-dark">school</span>
+                        </div>
+                        <div>
+                            <p class="mb-1 opacity-75">Total Students</p>
+                            <h3 class="mb-0">1,278</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card" style="background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); color: white;">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
+                            <span class="material-symbols-outlined fs-2 text-dark">play_circle</span>
+                        </div>
+                        <div>
+                            <p class="mb-1 opacity-75">Total Courses</p>
+                            <h3 class="mb-0">138</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color: white;">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
+                            <span class="material-symbols-outlined fs-2 text-dark">check_box</span>
+                        </div>
+                        <div>
+                            <p class="mb-1 opacity-75">Total Enrollments</p>
+                            <h3 class="mb-0">948</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar and Events -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="calendar-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">March 2028</h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <span class="material-symbols-outlined">chevron_left</span>
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <span class="material-symbols-outlined">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-borderless text-center">
+                        <thead>
+                            <tr>
+                                <th class="text-muted">Sun</th>
+                                <th class="text-muted">Mon</th>
+                                <th class="text-muted">Tue</th>
+                                <th class="text-muted">Wed</th>
+                                <th class="text-muted">Thu</th>
+                                <th class="text-muted">Fri</th>
+                                <th class="text-muted">Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-muted">27</td>
+                                <td class="text-muted">28</td>
+                                <td class="text-muted">29</td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                                <td>9</td>
+                                <td>10</td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>13</td>
+                                <td>14</td>
+                                <td>15</td>
+                                <td>16</td>
+                                <td>17</td>
+                                <td>18</td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td>20</td>
+                                <td>21</td>
+                                <td>22</td>
+                                <td>23</td>
+                                <td>24</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>26</td>
+                                <td>27</td>
+                                <td>28</td>
+                                <td>29</td>
+                                <td>30</td>
+                                <td>31</td>
+                                <td class="text-muted">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="calendar-container">
+                    <h5 class="mb-3">Upcoming Events</h5>
+                    <div class="event-item workshop">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">UI/UX Design Principles</h6>
+                                <small class="text-muted">Workshop • 01:30 PM - 03:30 PM (UTC)</small>
+                            </div>
+                            <small class="text-primary fw-bold">12<br><small>Sun</small></small>
+                        </div>
+                    </div>
+                    <div class="event-item event">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Industry Networking Night</h6>
+                                <small class="text-muted">Event • 06:00 PM - 09:00 PM (UTC)</small>
+                            </div>
+                            <small class="text-success fw-bold">21<br><small>Tue</small></small>
+                        </div>
+                    </div>
+                    <div class="event-item meeting">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Client Consultation</h6>
+                                <small class="text-muted">Meeting • 04:00 PM - 06:30 PM (UTC)</small>
+                            </div>
+                            <small class="text-warning fw-bold">31<br><small>Tue</small></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Analytics -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Revenue</h5>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>Last 7 Months</option>
+                            <option>Last 12 Months</option>
+                        </select>
+                    </div>
+                    <div style="position: relative; height: 250px;">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Enrollment Trends</h5>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>Last 7 Months</option>
+                            <option>Last 12 Months</option>
+                        </select>
+                    </div>
+                    <div style="position: relative; height: 250px;">
+                        <canvas id="enrollmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity and Courses -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="calendar-container">
+                    <h5 class="mb-3">Learning Activity</h5>
+                    <div class="activity-grid mb-3">
+                        <!-- Generate activity cells -->
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const activityGrid = document.querySelector('.activity-grid');
+                                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                                const times = ['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm'];
+
+                                days.forEach(day => {
+                                    const dayLabel = document.createElement('div');
+                                    dayLabel.textContent = day;
+                                    dayLabel.style.textAlign = 'center';
+                                    dayLabel.style.fontSize = '0.75rem';
+                                    dayLabel.style.color = '#64748b';
+                                    activityGrid.appendChild(dayLabel);
+                                });
+
+                                times.forEach(time => {
+                                    const timeLabel = document.createElement('div');
+                                    timeLabel.textContent = time;
+                                    timeLabel.style.fontSize = '0.75rem';
+                                    timeLabel.style.color = '#64748b';
+                                    timeLabel.style.textAlign = 'right';
+                                    timeLabel.style.marginRight = '8px';
+                                    activityGrid.appendChild(timeLabel);
+
+                                    for (let i = 0; i < 6; i++) {
+                                        const cell = document.createElement('div');
+                                        cell.className = 'activity-cell';
+                                        const level = Math.floor(Math.random() * 5);
+                                        if (level > 0) cell.classList.add(`level-${level}`);
+                                        activityGrid.appendChild(cell);
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted">
+                        <span style="font-size: 0.75rem;">1-50</span>
+                        <span style="font-size: 0.75rem;">51-100</span>
+                        <span style="font-size: 0.75rem;">101-150</span>
+                        <span style="font-size: 0.75rem;">151-200</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="calendar-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Top Courses</h5>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>This Week</option>
+                            <option>This Month</option>
+                        </select>
+                    </div>
+                    <div style="width: 200px; height: 200px; margin: 0 auto;">
+                        <canvas id="topCoursesChart"></canvas>
+                    </div>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div style="width: 12px; height: 12px; background: #ec4899; border-radius: 50%;"></div>
+                                <span style="font-size: 0.875rem;">Graphic Design Fundamentals</span>
+                            </div>
+                            <span class="fw-bold">36%</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div style="width: 12px; height: 12px; background: #8b5cf6; border-radius: 50%;"></div>
+                                <span style="font-size: 0.875rem;">Digital Marketing Mastery</span>
+                            </div>
+                            <span class="fw-bold">30%</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%;"></div>
+                                <span style="font-size: 0.875rem;">Python for Beginners</span>
+                            </div>
+                            <span class="fw-bold">25%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="calendar-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Recent Activities</h5>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>This Week</option>
+                            <option>This Month</option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-primary rounded-circle p-2">
+                                <span class="material-symbols-outlined text-white" style="font-size: 16px;">add</span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="fw-medium">New Course Added</div>
+                                <div class="text-muted small">Advanced Graphic Design Techniques was published</div>
+                                <div class="text-muted small">March 9, 2028, at 4:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-success rounded-circle p-2">
+                                <span class="material-symbols-outlined text-white" style="font-size: 16px;">check</span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="fw-medium">Completed Enrollment</div>
+                                <div class="text-muted small">Austin Chandler successfully enrolled in Social Media Marketing Strategies</div>
+                                <div class="text-muted small">March 7, 2028, at 2:35 PM</div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-warning rounded-circle p-2">
+                                <span class="material-symbols-outlined text-white" style="font-size: 16px;">star</span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="fw-medium">User Feedback Submitted</div>
+                                <div class="text-muted small">Berta Tray rated "Javascript Essentials" 5 stars and left a review</div>
+                                <div class="text-muted small">March 5, 2028, at 10:15 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Courses -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">New Courses</h5>
+                <div class="d-flex gap-2">
+                    <select class="form-select form-select-sm" style="width: auto;">
+                        <option>This Week</option>
+                        <option>This Month</option>
+                    </select>
+                    <button class="btn btn-outline-primary btn-sm">See All</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <div style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%); height: 120px; position: relative;">
+                            <div class="position-absolute bottom-0 end-0 p-3">
+                                <span class="material-symbols-outlined text-white fs-1">campaign</span>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h6 class="mb-2">Social Media Marketing Strategies</h6>
+                            <div class="d-flex justify-content-between align-items-center text-muted small mb-2">
+                                <span>18 Lessons • 30 Hours</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-1">
+                                    <img src="https://via.placeholder.com/24x24/667eea/ffffff?text=A" class="rounded-circle" width="24" height="24">
+                                    <span class="small">+280</span>
+                                </div>
+                                <div class="fw-bold text-success">$79</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <div style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); height: 120px; position: relative;">
+                            <div class="position-absolute bottom-0 end-0 p-3">
+                                <span class="material-symbols-outlined text-white fs-1">analytics</span>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h6 class="mb-2">Business Analytics with Excel</h6>
+                            <div class="d-flex justify-content-between align-items-center text-muted small mb-2">
+                                <span>22 Lessons • 45 Hours</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-1">
+                                    <img src="https://via.placeholder.com/24x24/10b981/ffffff?text=B" class="rounded-circle" width="24" height="24">
+                                    <span class="small">+300</span>
+                                </div>
+                                <div class="fw-bold text-success">$95</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <div style="background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); height: 120px; position: relative;">
+                            <div class="position-absolute bottom-0 end-0 p-3">
+                                <span class="material-symbols-outlined text-white fs-1">design_services</span>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h6 class="mb-2">UI/UX Design for Beginners</h6>
+                            <div class="d-flex justify-content-between align-items-center text-muted small mb-2">
+                                <span>20 Lessons • 40 Hours</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-1">
+                                    <img src="https://via.placeholder.com/24x24/ef4444/ffffff?text=C" class="rounded-circle" width="24" height="24">
+                                    <span class="small">+320</span>
+                                </div>
+                                <div class="fw-bold text-success">$99</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students Demographic -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="calendar-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Students Demographic</h5>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>This Week</option>
+                            <option>This Month</option>
+                        </select>
+                    </div>
+                    <div class="world-map mb-3"></div>
+                    <div class="row text-center">
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                <img src="https://via.placeholder.com/20x15/0052cc/ffffff?text=US" alt="US" class="rounded">
+                                <span class="small">New York, USA</span>
+                            </div>
+                            <div class="fw-bold">(25%)</div>
+                        </div>
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                <img src="https://via.placeholder.com/20x15/ff0000/ffffff?text=CA" alt="CA" class="rounded">
+                                <span class="small">Toronto, Canada</span>
+                            </div>
+                            <div class="fw-bold">(15%)</div>
+                        </div>
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                <img src="https://via.placeholder.com/20x15/012169/ffffff?text=UK" alt="UK" class="rounded">
+                                <span class="small">London, UK</span>
+                            </div>
+                            <div class="fw-bold">(22%)</div>
+                        </div>
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                <img src="https://via.placeholder.com/20x15/ff6600/ffffff?text=AU" alt="AU" class="rounded">
+                                <span class="small">Sydney, Australia</span>
+                            </div>
+                            <div class="fw-bold">(18%)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard JavaScript -->
+    <script src="scripts/dashboard.js"></script>
+    <!-- Global Sign Out Functionality -->
+    <script src="scripts/global-signout.js"></script>
+
+</body>
+
+</html>

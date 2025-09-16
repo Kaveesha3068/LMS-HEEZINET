@@ -1,0 +1,336 @@
+/* Preload Page Specific Styles */
+
+/* Hidden states for dynamic content */
+.preloaded-students-card-hidden {
+    display: none !important;
+}
+
+.toast-container-custom {
+    z-index: 11;
+}
+
+/* Preload Buttons Grid */
+.preload-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.preload-btn {
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 120px;
+    font-weight: 500;
+}
+
+.preload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.preload-btn .material-symbols-outlined {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.preload-btn small {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.preload-btn.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.preload-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Preload Description */
+.preload-description {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Custom Form Styling */
+.form-group .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-select, .form-control {
+    border-radius: 8px;
+    border: 1.5px solid #e0e6ed;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Student Table Styling */
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e6ed;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Student Count Badge */
+#studentCount {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+}
+
+/* Recent Preloads Styling */
+.list-group-item {
+    border-radius: 8px !important;
+    border: 1px solid #e0e6ed;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.list-group-item h6 {
+    color: #495057;
+    font-weight: 600;
+}
+
+.list-group-item p {
+    font-size: 0.9rem;
+}
+
+/* Card Header Variants */
+.card-header-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+}
+
+.card-header-primary {
+    background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+    color: white;
+    border: none;
+}
+
+.card-header-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #007bff 100%);
+    color: white;
+    border: none;
+}
+
+.card-header-success h5,
+.card-header-primary h5,
+.card-header-info h5 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+/* Action Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn .material-symbols-outlined {
+    font-size: 1.25rem;
+}
+
+/* Search Container Enhancement */
+.search-container {
+    position: relative;
+    max-width: 300px;
+}
+
+.search-container .search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    pointer-events: none;
+}
+
+.search-container .form-control {
+    padding-right: 45px;
+}
+
+/* Page Title Enhancement */
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.page-title .material-symbols-outlined {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .preload-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .preload-btn {
+        min-height: 100px;
+        padding: 1rem;
+    }
+    
+    .preload-btn .material-symbols-outlined {
+        font-size: 2rem;
+    }
+    
+    .header-right .search-container {
+        max-width: 200px;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .preload-btn {
+        min-height: 80px;
+        padding: 0.75rem;
+    }
+    
+    .preload-btn .material-symbols-outlined {
+        font-size: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Loading States */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Success States */
+.success-state {
+    color: #28a745;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Error States */
+.error-state {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Active Navigation Item */
+.nav-item.active {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Toast Enhancements */
+.toast {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.toast-header {
+    border-radius: 12px 12px 0 0;
+    padding: 1rem;
+}
+
+.toast-body {
+    padding: 1rem;
+    font-weight: 500;
+}

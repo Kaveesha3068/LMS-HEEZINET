@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLMS - Calendar</title>
+    <link rel="icon" type="image/x-icon" href="../../frontend/assets/images/EduLMS-icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/calendar.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+
+    <div class="container d-flex flex-row" style="min-height:100vh;width:100vw;max-width:100vw;overflow:hidden;background:#fff;">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img src="../../frontend/assets/images/logo.png" alt="logo" width="32" height="32">
+                <span>EduLMS</span>
+            </div>
+
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+                <a href="preload.html" class="nav-item ">🔄 Preload Students</a>
+                <a href="attendance.html" class="nav-item">📋 Attendance</a>
+                <a href="Messages.html" class="nav-item">💬 Messages</a>
+                <a href="calendar.html" class="nav-item active">📅 Calendar</a>
+                <a href="Enrollments.html" class="nav-item">📋 Enrollments</a>
+                <a href="Courses.html" class="nav-item ">📚 Courses</a>
+                <a href="Instructors.html" class="nav-item ">👨‍🏫 Instructors</a>
+                <a href="Students.html" class="nav-item ">👥 Students</a>
+                <a href="Financials.html" class="nav-item">💰 Financials</a>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="sign-out-btn" onclick="handleSignOut()">
+                    <span class="sign-out-icon">🚪</span>
+                    <span class="sign-out-text">Sign Out</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="top-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                       <h2 class="mb-0">Calendar</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1">
+                            <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="header-right d-flex align-items-center gap-3">
+                    <div class="position-relative" style="display: flex; align-items: center; gap: 0;">
+                        <input type="text" class="form-control" placeholder="Search anything" style="width: 300px; padding-right: 40px;">
+                        <span class="material-symbols-outlined position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 24px; pointer-events: none;">search</span>
+                    </div>
+                    <button class="btn btn-outline-secondary rounded-circle position-relative" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <img src="../../frontend/assets/images/student.png" alt="Notification" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">2</span>
+                    </button>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+                    </div>
+                </div>
+            </div>
+
+           
+
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="stat-card all-schedules">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">All Schedules</div>
+                    <div class="stat-chart">📊</div>
+                </div>
+                <div class="stat-card event-schedules">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Event Schedules</div>
+                    <div class="stat-chart">📈</div>
+                </div>
+                <div class="stat-card meeting-schedules">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Meeting Schedules</div>
+                    <div class="stat-chart">📊</div>
+                </div>
+                <div class="stat-card workshop-schedules">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Workshop Schedules</div>
+                    <div class="stat-chart">📈</div>
+                </div>
+            </div>
+
+            <!-- Calendar Header -->
+            <div class="calendar-header">
+                <h2 class="calendar-title">March 2028</h2>
+                <div class="calendar-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn">Day</button>
+                        <button class="view-btn">Week</button>
+                        <button class="view-btn active">Month</button>
+                    </div>
+                    <button class="filter-btn">🔽 Filter</button>
+                    <button class="new-agenda-btn">+ New Agenda</button>
+                </div>
+            </div>
+
+            <!-- Calendar Layout -->
+            <div class="calendar-layout">
+                <!-- Calendar Main -->
+                <div class="calendar-main">
+                    <div class="calendar-grid">
+                        <!-- Header Row -->
+                        <div class="calendar-header-cell">Sun</div>
+                        <div class="calendar-header-cell">Mon</div>
+                        <div class="calendar-header-cell">Tue</div>
+                        <div class="calendar-header-cell">Wed</div>
+                        <div class="calendar-header-cell">Thu</div>
+                        <div class="calendar-header-cell">Fri</div>
+                        <div class="calendar-header-cell">Sat</div>
+
+                        <!-- Calendar Days -->
+                        <div class="calendar-cell other-month"><div class="date-number">27</div></div>
+                        <div class="calendar-cell other-month"><div class="date-number">28</div></div>
+                        <div class="calendar-cell other-month"><div class="date-number">29</div></div>
+                        <div class="calendar-cell"><div class="date-number">1</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">2</div>
+                            <div class="event-item event-conference">Annual Learning Summit</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">3</div>
+                        </div>
+                        <div class="calendar-cell"><div class="date-number">4</div></div>
+
+                        <div class="calendar-cell"><div class="date-number">5</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">6</div>
+                            <div class="event-item event-conference">Digital Marketing Conference</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">7</div>
+                            <div class="event-item event-standup">Weekly Standup</div>
+                        </div>
+                        <div class="calendar-cell selected">
+                            <div class="date-number">8</div>
+                            <div class="date-indicator"></div>
+                        </div>
+                        <div class="calendar-cell"><div class="date-number">9</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">10</div>
+                            <div class="event-item event-kickoff">Project Kickoff</div>
+                        </div>
+                        <div class="calendar-cell"><div class="date-number">11</div></div>
+
+                        <div class="calendar-cell"><div class="date-number">12</div></div>
+                        <div class="calendar-cell"><div class="date-number">13</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">14</div>
+                            <div class="event-item event-workshop">UX/UI Design Principles Workshop</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">15</div>
+                            <div class="event-item event-networking">Industry Networking Event</div>
+                            <div class="event-item event-consultation">Client Consultation</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">16</div>
+                            <div class="event-item event-challenge">Hackathon Coding Challenge</div>
+                        </div>
+                        <div class="calendar-cell"><div class="date-number">17</div></div>
+                        <div class="calendar-cell"><div class="date-number">18</div></div>
+
+                        <div class="calendar-cell"><div class="date-number">19</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">20</div>
+                            <div class="event-item event-workshop">Python Basics Workshop</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">21</div>
+                            <div class="event-item event-trends">E-Learning Future Trends</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">22</div>
+                            <div class="event-item event-review">Quarterly Review</div>
+                        </div>
+                        <div class="calendar-cell">
+                            <div class="date-number">23</div>
+                            <div class="event-item event-workshop">Team Building Workshop</div>
+                        </div>
+                        <div class="calendar-cell"><div class="date-number">24</div></div>
+                        <div class="calendar-cell"><div class="date-number">25</div></div>
+
+                        <div class="calendar-cell"><div class="date-number">26</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">27</div>
+                            <div class="event-item event-mentoring">Weekly Team Mentoring</div>
+                        </div>
+                        <div class="calendar-cell"><div class="date-number">28</div></div>
+                        <div class="calendar-cell"><div class="date-number">29</div></div>
+                        <div class="calendar-cell"><div class="date-number">30</div></div>
+                        <div class="calendar-cell">
+                            <div class="date-number">31</div>
+                            <div class="event-item event-workshop">Advanced Photo...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Sidebar -->
+                <div class="filter-sidebar">
+                    <div class="filter-header">
+                        <h3 class="filter-title">Filter</h3>
+                        <span style="cursor: pointer;">✕</span>
+                    </div>
+
+                    <div class="filter-section">
+                        <h4>Agenda</h4>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Conferences</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Networking</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Industry Summits</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Team Discussions</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Client Consultations</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Project Kickoffs</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Training Programs</span>
+                        </div>
+                        <div class="filter-option">
+                            <div class="filter-checkbox checked"></div>
+                            <span class="filter-label">Hands-on Learning Sessions</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h4>Category</h4>
+                        <div class="filter-option">
+                            <div style="width: 12px; height: 12px; background: #f6ad55; border-radius: 50%; margin-right: 8px;"></div>
+                            <span class="filter-label">Event</span>
+                        </div>
+                        <div class="filter-option">
+                            <div style="width: 12px; height: 12px; background: #f56565; border-radius: 50%; margin-right: 8px;"></div>
+                            <span class="filter-label">Meeting</span>
+                        </div>
+                        <div class="filter-option">
+                            <div style="width: 12px; height: 12px; background: #38b2ac; border-radius: 50%; margin-right: 8px;"></div>
+                            <span class="filter-label">Workshop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Details Panel - Now at bottom of page -->
+            <div class="details-panel-bottom">
+                <div class="details-header">
+                    <h3 class="details-title">Schedule Details</h3>
+                    <span style="cursor: pointer;">✕</span>
+                </div>
+
+                <div class="details-content-grid">
+                    <div class="event-details">
+                        <div class="event-badge meeting">Meeting</div>
+                        <h4 class="event-title">Quarterly Review</h4>
+                        
+                        <div class="event-info">
+                            <span>📅</span>
+                            <span>March 21, 2028</span>
+                        </div>
+                        <div class="event-info">
+                            <span>🕐</span>
+                            <span>03:30 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <span>🏢</span>
+                            <span>Conference Room C</span>
+                        </div>
+
+                        <div style="margin: 15px 0;">
+                            <strong>Team</strong>
+                            <div class="attendees">
+                                <div class="attendee-avatar"></div>
+                                <span style="font-size: 12px;">Oliver Center (PM)</span>
+                            </div>
+                        </div>
+
+                        <div style="margin: 15px 0;">
+                            <strong>Note</strong>
+                            <p style="font-size: 12px; color: #718096; margin-top: 5px;">Discussion on Q1 performance and future goals.</p>
+                        </div>
+                    </div>
+
+                    <div class="event-details">
+                        <div class="event-badge workshop">Workshop</div>
+                        <h4 class="event-title">Public Speaking Workshop</h4>
+                        
+                        <div class="event-info">
+                            <span>📅</span>
+                            <span>March 31, 2028</span>
+                        </div>
+                        <div class="event-info">
+                            <span>🕐</span>
+                            <span>02:30 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <span>🏢</span>
+                            <span>Training Room 2</span>
+                        </div>
+
+                        <div style="margin: 15px 0;">
+                            <strong>Team</strong>
+                            <div class="attendees">
+                                <div class="attendee-avatar" style="background: #f6ad55;"></div>
+                                <span style="font-size: 12px;">Sarah Collins (PM)</span>
+                            </div>
+                        </div>
+
+                        <div style="margin: 15px 0;">
+                            <strong>Note</strong>
+                            <p style="font-size: 12px; color: #718096; margin-top: 5px;">Hands-on session to improve confidence in public speaking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation - Moved to bottom -->
+            <div class="breadcrumb">
+                <a href="dashboard.html" class="text-decoration-none text-muted">Dashboard</a> /
+                <span class="text-primary">Enrollments</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/calendar.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/global-signout.js"></script>
+</body>
+</html>

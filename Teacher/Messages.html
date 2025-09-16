@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EduLMS Messages</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="styles/messages.css">
+</head>
+
+<body>
+   <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+
+<div class="container d-flex flex-row" style="min-height:100vh;width:100vw;max-width:100vw;overflow:hidden;background:#fff;">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="../frontend/assets/images/logo.png" alt="logo" width="32" height="32">
+            <span>EduLMS</span>
+        </div>
+
+        <div class="nav-menu">
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+         
+            <a href="attendance.html" class="nav-item">📋 Attendance</a>
+            <a href="Messages.html" class="nav-item active">💬 Messages</a>
+            <a href="calendar.html" class="nav-item">📅 Calendar</a>
+            <a href="Courses.html" class="nav-item " >📚 Courses</a>
+            <a href="Students.html" class="nav-item">👥 Students</a>
+            <a href="Financials.html" class="nav-item">💰 Financials</a>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="sign-out-btn" onclick="handleSignOut()">
+                <span class="sign-out-icon">🚪</span>
+                <span class="sign-out-text">Sign Out</span>
+            </button>
+        </div>
+    </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Header -->
+            <div class="header d-flex justify-content-between align-items-center p-3 bg-white border-bottom">
+                <div>
+                    <h4 class="mb-0 fw-bold">Messages</h4>
+                    <div class="text-muted small">
+                        <a href="dashboard.html" class="text-decoration-none text-muted">Dashboard</a> / 
+                        <span class="text-primary">Messages</span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="position-relative">
+                        <input type="text" class="form-control form-control-sm rounded-pill px-3" placeholder="Search anything" style="width: 250px;">
+                        <i class="material-icons-round position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #64748b;">search</i>
+                    </div>
+                    <div class="position-relative">
+                        <i class="material-icons-round" style="font-size: 24px; color: #64748b;">notifications</i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">2</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                            <span>PS</span>
+                        </div>
+                        <div>
+                            <div class="fw-medium small">Phillip Stanton</div>
+                            <div class="text-muted small">Admin</div>
+                        </div>
+                        <i class="material-icons-round ms-2" style="font-size: 20px; color: #64748b;">settings</i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="messages-container">
+                <!-- Chat List -->
+                <div class="chat-list">
+                    <div class="chat-list-header d-flex justify-content-between align-items-center p-3 border-bottom">
+                        <h6 class="mb-0 fw-bold">Messages</h6>
+                        <button class="btn btn-sm btn-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+                            <i class="material-icons-round" style="font-size: 18px;">add</i>
+                        </button>
+                    </div>
+
+                    <div class="chat-search p-3 border-bottom">
+                        <div class="position-relative">
+                            <input type="text" class="form-control form-control-sm rounded-pill px-3" placeholder="Search names, chat, etc...">
+                            <i class="material-icons-round position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #64748b;">search</i>
+                        </div>
+                    </div>
+
+                    <div class="chat-items overflow-auto">
+                        <div class="chat-item d-flex align-items-center p-3 border-bottom bg-light">
+                            <div class="chat-avatar me-3">
+                                <img src="../frontend/assets/images/student.png" alt="Daniella Jung" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;">
+                            </div>
+                            <div class="chat-details flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">Daniella Jung</span>
+                                    <span class="text-muted small">8:30 AM</span>
+                                </div>
+                                <div class="text-muted small text-truncate">Hey, I'm facing login issues. Any help?</div>
+                            </div>
+                            <div class="ms-2">
+                                <span class="badge rounded-pill bg-primary px-2">2</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-item d-flex align-items-center p-3 border-bottom">
+                            <div class="chat-avatar me-3">
+                                <img src="../frontend/assets/images/instructor.png" alt="Emma Johnson" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;">
+                            </div>
+                            <div class="chat-details flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">Emma Johnson</span>
+                                    <span class="text-muted small">10:14 AM</span>
+                                </div>
+                                <div class="text-muted small text-truncate">Hey! Just wanted to check if the assignment is uploaded?</div>
+                            </div>
+                            <div class="ms-2">
+                                <i class="material-icons-round text-muted" style="font-size: 16px;">push_pin</i>
+                            </div>
+                        </div>
+
+                        <div class="chat-item d-flex align-items-center p-3 border-bottom">
+                            <div class="chat-avatar me-3">
+                                <img src="../frontend/assets/images/student.png" alt="Michael Brown" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;">
+                            </div>
+                            <div class="chat-details flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-medium">Michael Brown</span>
+                                    <span class="text-muted small">09:45 AM</span>
+                                </div>
+                                <div class="text-muted small text-truncate">The webinar was insightful! Thanks for organizing.</div>
+                            </div>
+                            <div class="ms-2">
+                                <i class="material-icons-round text-muted" style="font-size: 16px;">push_pin</i>
+                            </div>
+                        </div>
+
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <img src="../frontend/assets/images/instructor.png" alt="James Wilson">
+                            </div>
+                            <div class="chat-details">
+                                <div class="chat-header">
+                                    <span class="chat-name">Lishini</span>
+                                    <span class="chat-time">8:30 AM</span>
+                                </div>
+                                <div class="chat-preview">Please send me your final paper due next week...</div>
+                            </div>
+                            <div class="chat-status">
+                                <div class="pin-icon">📌</div>
+                            </div>
+                        </div>
+
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <img src="../frontend/assets/images/student.png" alt="Olivia Davis">
+                            </div>
+                            <div class="chat-details">
+                                <div class="chat-header">
+                                    <span class="chat-name">vinishi</span>
+                                    <span class="chat-time">Yesterday</span>
+                                </div>
+                                <div class="chat-preview">Do we have a recorded session for last week's cl...</div>
+                            </div>
+                        </div>
+
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <div class="avatar-initial">DJ</div>
+                            </div>
+                            <div class="chat-details">
+                                <div class="chat-header">
+                                    <span class="chat-name">Supun</span>
+                                    <span class="chat-time">Mar 8</span>
+                                </div>
+                                <div class="chat-preview">Great! If it still doesn't work, let me know and...</div>
+                            </div>
+                        </div>
+
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <div class="avatar-initial">MR</div>
+                            </div>
+                            <div class="chat-details">
+                                <div class="chat-header">
+                                    <span class="chat-name">Mohammed Rodrigo</span>
+                                    <span class="chat-time">Mar 8</span>
+                                </div>
+                                <div class="chat-preview">I'll coordinate with the team to ensure we have...</div>
+                            </div>
+                        </div>
+
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <div class="avatar-initial">IC</div>
+                            </div>
+                            <div class="chat-details">
+                                <div class="chat-header">
+                                    <span class="chat-name">Chaneesha Liyanage</span>
+                                    <span class="chat-time">Mar 4</span>
+                                </div>
+                                <div class="chat-preview">Good me course! Any chance we can have an...</div>
+                            </div>
+                        </div>
+
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <div class="avatar-initial">LH</div>
+                            </div>
+                            <div class="chat-details">
+                                <div class="chat-header">
+                                    <span class="chat-name">Nethuka Lishan</span>
+                                    <span class="chat-time">Mar 3</span>
+                                </div>
+                                <div class="chat-preview">Just done them!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Window -->
+                <div class="chat-window ms-0">
+                    <div class="chat-window-header d-flex justify-content-between align-items-center p-3 border-bottom">
+                        <div class="d-flex align-items-center position-relative">
+                            <img src="../frontend/assets/images/student.png" alt="Daniella Jung" class="rounded-circle me-3 profile-photo" style="width: 40px; height: 40px; object-fit: cover; cursor:pointer;">
+                            <div>
+                                <div class="fw-medium">Daniella Jung</div>
+                                <div class="text-muted small">last seen recently</div>
+                            </div>
+                            <!-- Account Info Popup -->
+                            <div class="account-info-popup bg-white shadow rounded p-3" style="position:absolute;top:50px;left:0;min-width:300px;display:none;z-index:10;">
+                                <div class="mb-2">
+                                    <span class="text-muted" style="font-size: 0.95rem;">About</span>
+                                    <div style="font-size: 0.95rem;">Tech enthusiast &amp; online learner, currently taking JavaScript Essentials. Interested in front-end development.</div>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="fw-bold me-2">Media</span>
+                                    <span class="badge bg-light text-dark">2</span>
+                                    <div class="d-flex gap-2 mt-1">
+                                        <img src="../frontend/assets/images/student-reg.jpg" alt="Media 1" class="rounded" style="width: 40px; height: 28px; object-fit: cover;">
+                                        <img src="../frontend/assets/images/teacher-reg.jpg" alt="Media 2" class="rounded" style="width: 40px; height: 28px; object-fit: cover;">
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="fw-bold me-2">Documents</span>
+                                    <span class="badge bg-light text-dark">3</span>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><span class="material-icons-round me-1" style="font-size:16px;color:#f59e42;">description</span>Login_error_report_daniella_jung_coursify.pdf</li>
+                                        <li><span class="material-icons-round me-1" style="font-size:16px;color:#f59e42;">description</span>daniella_jung_login_failed_ticket#4837.txt</li>
+                                        <li><span class="material-icons-round me-1" style="font-size:16px;color:#f59e42;">description</span>coursify_login_issue_invalid_credentials_2025-04.pdf</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="fw-bold me-2">Links</span>
+                                    <span class="badge bg-light text-dark">4</span>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="https://dashboard.coursify.com/reset-password?user=daniella" target="_blank">https://dashboard.coursify.com/reset-password?user=daniella</a></li>
+                                        <li><a href="https://www.coursify.com/help/login-error-invalid-credentials" target="_blank">https://www.coursify.com/help/login-error-invalid-credentials</a></li>
+                                        <li><a href="https://dashboard.coursify.com/user/daniella_jung" target="_blank">https://dashboard.coursify.com/user/daniella_jung</a></li>
+                                        <li><a href="#" target="_blank">...</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="material-icons-round" style="font-size: 20px;">phone</i>
+                            </button>
+                            <button class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="material-icons-round" style="font-size: 20px;">videocam</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages p-3" id="chatMessages">
+                        <div class="message-group">
+                            <div class="message-date text-center my-3">
+                                <span class="bg-light px-3 py-1 rounded text-muted small">March 8, 2024</span>
+                            </div>
+                            
+                            <div class="message mb-3 d-flex">
+                                <img src="../frontend/assets/images/student.png" alt="Daniella Jung" class="rounded-circle me-2 align-self-end" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div>
+                                    <div class="message-content bg-white p-3 rounded shadow-sm">
+                                        Hey, I'm facing login issues. Any help?
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">1:00 PM</div>
+                                </div>
+                            </div>
+
+                            <div class="message mb-3 d-flex flex-row-reverse">
+                                <img src="../frontend/assets/images/student.png" alt="Admin" class="rounded-circle ms-2 align-self-end" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div class="text-end">
+                                    <div class="message-content bg-primary text-white p-3 rounded shadow-sm">
+                                        Hi Daniel! Could you specify the issue? Are you getting an error message?
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">1:01 PM</div>
+                                </div>
+                            </div>                            <div class="message mb-3 d-flex">
+                                <img src="../frontend/assets/images/student.png" alt="Daniella Jung" class="rounded-circle me-2 align-self-end" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div>
+                                    <div class="message-content bg-white p-3 rounded shadow-sm">
+                                        Yeah, it says "Invalid Credentials" even though my password is correct.
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">1:03 PM</div>
+                                </div>
+                            </div>
+
+                            <div class="message mb-3 d-flex flex-row-reverse">
+                                <img src="../frontend/assets/images/student.png" alt="Admin" class="rounded-circle ms-2 align-self-end" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div class="text-end">
+                                    <div class="message-content bg-primary text-white p-3 rounded shadow-sm">
+                                        Have you tried resetting your password?
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">1:04 PM</div>
+                                </div>
+                            </div>
+
+                            <div class="message mb-3 d-flex">
+                                <img src="../frontend/assets/images/student.png" alt="Daniella Jung" class="rounded-circle me-2 align-self-end" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div>
+                                    <div class="message-content bg-white p-3 rounded shadow-sm">
+                                        Not yet, I'll try that now.
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">1:05 PM</div>
+                                </div>
+                            </div>
+
+                            <div class="message mb-3 d-flex flex-row-reverse">
+                                <img src="../frontend/assets/images/student.png" alt="Admin" class="rounded-circle ms-2 align-self-end" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div class="text-end">
+                                    <div class="message-content bg-primary text-white p-3 rounded shadow-sm">
+                                        Great! If it still doesn't work, let me know and I'll escalate the issue for support.
+                                    </div>
+                                    <div class="message-time text-muted small mt-1">1:05 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container p-3 border-top bg-white">
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="text" class="form-control rounded-pill" placeholder="Type a message...">
+                            <button class="btn btn-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="material-icons-round" style="font-size: 20px;">attach_file</i>
+                            </button>
+                            <button class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="material-icons-round" style="font-size: 20px;">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="scripts/messages.js"></script>
+    <script src="scripts/global-signout.js"></script>
+</body>
+
+</html>
