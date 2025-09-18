@@ -2,11 +2,14 @@
 
 /* Main Layout */
 .main-content {
-    margin-left: 280px;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
     padding: 24px 32px;
     background: #fff;
     min-height: 100vh;
-    width: calc(100vw - 280px);
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 /* Header Styles */
@@ -27,11 +30,13 @@
 
 /* Container Styles */
 .container {
+    display: flex;
     min-height: 100vh;
     width: 100vw;
     max-width: 100vw;
     overflow: hidden;
     background: #fff;
+    padding: 0;
 }
 
 /* Content Tabs */

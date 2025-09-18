@@ -6,13 +6,95 @@ let quizzes = [];
 let currentTab = 'assignments';
 let currentEditId = null;
 
+// Quiz question state for modal
+let quizQuestions = [];
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeAssignments();
     setupEventListeners();
     loadSampleData();
     updateStats();
+    setupQuizQuestionUI();
 });
+// Setup quiz question management UI
+function setupQuizQuestionUI() {
+    const quizFields = document.getElementById('quizFields');
+    if (!quizFields) return;
+    const addBtn = document.getElementById('addQuestionBtn');
+    if (addBtn) {
+        addBtn.addEventListener('click', function() {
+            addQuizQuestion();
+        });
+    }
+    renderQuizQuestions();
+}
+
+function addQuizQuestion() {
+    quizQuestions.push({
+        text: '',
+        options: ['', '', ''],
+        correct: 0
+    });
+    renderQuizQuestions();
+    updateQuestionCount();
+}
+
+function removeQuizQuestion(idx) {
+    quizQuestions.splice(idx, 1);
+    renderQuizQuestions();
+    updateQuestionCount();
+}
+
+function updateQuizQuestionText(idx, value) {
+    quizQuestions[idx].text = value;
+}
+
+function updateQuizOption(idx, optIdx, value) {
+    quizQuestions[idx].options[optIdx] = value;
+}
+
+function setCorrectOption(idx, optIdx) {
+    quizQuestions[idx].correct = optIdx;
+    renderQuizQuestions();
+}
+
+function renderQuizQuestions() {
+    const list = document.getElementById('quizQuestionsList');
+    if (!list) return;
+    if (quizQuestions.length === 0) {
+        list.innerHTML = '<div class="text-muted">No questions added yet.</div>';
+        return;
+    }
+    list.innerHTML = quizQuestions.map((q, i) => `
+        <div class="card mb-2">
+            <div class="card-body p-2">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fw-bold me-2">Q${i+1}.</span>
+                    <input type="text" class="form-control form-control-sm flex-grow-1" placeholder="Enter question..." value="${q.text.replace(/"/g, '&quot;')}" onchange="updateQuizQuestionText(${i}, this.value)">
+                    <button type="button" class="btn btn-sm btn-link text-danger ms-2" title="Remove" onclick="removeQuizQuestion(${i})"><span class="material-symbols-outlined">delete</span></button>
+                </div>
+                <div class="row g-2">
+                    ${[0,1,2].map(j => `
+                        <div class="col-md-4">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-text">
+                                    <input type="radio" name="correct${i}" ${q.correct===j?'checked':''} onclick="setCorrectOption(${i},${j})" title="Mark as correct">
+                                </div>
+                                <input type="text" class="form-control" placeholder="Option ${String.fromCharCode(65+j)}" value="${q.options[j].replace(/"/g, '&quot;')}" onchange="updateQuizOption(${i},${j}, this.value)">
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateQuestionCount() {
+    const countInput = document.getElementById('questionCount');
+    if (countInput) countInput.value = quizQuestions.length;
+}
 
 // Sample data for demonstration
 function loadSampleData() {
@@ -189,12 +271,12 @@ function toggleFormFields() {
 function showCreateModal() {
     currentEditId = null;
     resetForm();
-    
+    quizQuestions = [];
+    renderQuizQuestions();
     // Set type based on current tab
     const typeRadio = document.getElementById(currentTab === 'assignments' ? 'assignmentType' : 'quizType');
     typeRadio.checked = true;
     toggleFormFields();
-    
     const modal = new bootstrap.Modal(document.getElementById('createModal'));
     modal.show();
 }
@@ -202,23 +284,21 @@ function showCreateModal() {
 // Reset form to initial state
 function resetForm() {
     document.getElementById('createForm').reset();
-    
     // Reset to default values
     document.getElementById('maxPoints').value = 100;
     document.getElementById('timeLimit').value = 30;
     document.getElementById('attempts').value = 1;
-    document.getElementById('questionCount').value = 10;
+    document.getElementById('questionCount').value = 0;
     document.getElementById('dueTime').value = '23:59';
-    
     // Set due date to tomorrow
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     document.getElementById('dueDate').value = tomorrow.toISOString().split('T')[0];
-    
     // Reset type selection
     document.getElementById('assignmentType').checked = true;
     toggleFormFields();
-    
+    quizQuestions = [];
+    renderQuizQuestions();
     currentEditId = null;
 }
 
@@ -254,7 +334,8 @@ function saveContent() {
     } else {
         data.timeLimit = parseInt(document.getElementById('timeLimit').value);
         data.attempts = parseInt(document.getElementById('attempts').value);
-        data.questionCount = parseInt(document.getElementById('questionCount').value);
+        data.questionCount = quizQuestions.length;
+        data.questions = JSON.parse(JSON.stringify(quizQuestions));
         data.shuffleQuestions = document.getElementById('shuffleQuestions').checked;
         data.showResults = document.getElementById('showResults').checked;
         data.studentsAssigned = getStudentCount(data.class);
@@ -482,10 +563,10 @@ function editAssignment(id) {
 function editQuiz(id) {
     const quiz = quizzes.find(q => q.id === id);
     if (!quiz) return;
-    
     currentEditId = id;
     populateForm(quiz);
-    
+    quizQuestions = quiz.questions ? JSON.parse(JSON.stringify(quiz.questions)) : [];
+    renderQuizQuestions();
     const modal = new bootstrap.Modal(document.getElementById('createModal'));
     modal.show();
 }
