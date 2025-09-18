@@ -59,23 +59,25 @@ body {
     transform: translateX(-100%);
 }
 
+/* Logo Section */
 .logo {
-    padding: 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a202c;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    gap: var(--spacing-sm);
 }
 
 .logo img {
-    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
 }
 
-.nav-menu {
-    flex: 1;
-    padding: 0 10px;
+.logo span {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--primary-color);
 }
 
 .nav-item {

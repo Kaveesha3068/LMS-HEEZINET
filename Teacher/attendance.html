@@ -22,7 +22,7 @@
           crossorigin="anonymous">
 
     <!-- Enhanced Attendance Management CSS -->
-    <link rel="stylesheet" href="styles/attendance.css">
+    <link rel="stylesheet" href="./styles/attendance.css">
 </head>
 
 <body>
@@ -44,13 +44,14 @@
 
             <!-- Navigation Menu -->
             <div class="nav-menu">
-                <a href="dashboard.html" class="nav-item bold-text">📊 Dashboard</a>
+                <a href="dashboard.html" class="nav-item ">📊 Dashboard</a>
                
                 <a href="attendance.html" class="nav-item active bold-text">📋 Attendance</a>
                 <a href="Messages.html" class="nav-item">💬 Messages</a>
                 <a href="calendar.html" class="nav-item">📅 Calendar</a>
-               <a href="Courses.html" class="nav-item bold-text">📚 Courses</a>
+               <a href="Courses.html" class="nav-item ">📚 Courses</a>
                 <a href="Students.html" class="nav-item">👥 Students</a>
+                <a href="assignments.html" class="nav-item">📝 Assignments</a>
                 <a href="Financials.html" class="nav-item">💰 Financials</a>
             </div>
 
@@ -63,140 +64,77 @@
             </div>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="main-content" id="mainContent">
-            
-            <!-- Header Section -->
-            <div class="header">
-                <div class="header-left">
-                    <h2 class="page-title">
-                        <span class="material-symbols-outlined">how_to_reg</span>
-                       Attendance
-                    </h2>
-                    <div class="breadcrumb">
-                        <a href="dashboard.html">Dashboard</a> / Attendance Management
-                    </div>
-                    <!-- Current Date Display -->
-                    <div class="current-date-display">
-                        <span class="material-symbols-outlined">today</span>
-                        <span id="currentDate">Loading...</span>
-                    </div>
-                </div>
-                <div class="header-right">
-                    <div class="search-container">
-                        <input type="text" 
-                               id="globalSearch" 
-                               class="form-control" 
-                               placeholder="Search students across all classes..." 
-                               autocomplete="off">
-                        <span class="material-symbols-outlined search-icon">search</span>
-                    </div>
-                    <div class="user-profile">
-                        <div class="user-avatar">
-                            <img src="../frontend/assets/images/student.png" alt="Admin User">
-                            <span class="notification-badge">2</span>
-                        </div>
-                        <div class="user-info">
-                            <div class="user-name">Admin User</div>
-                            <div class="user-role">Attendance Manager</div>
-                        </div>
-                        <span class="material-symbols-outlined notification-icon">notifications</span>
-                        <span class="material-symbols-outlined settings-icon">settings</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dashboard Stats Cards -->
-            <div class="stats-container">
-                <div class="stat-card pink-gradient">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
-                            <span class="material-symbols-outlined fs-2 text-dark">groups</span>
-                        </div>
-                        <div>
-                            <p class="mb-1 opacity-75">Total Students</p>
-                            <h3 class="mb-0" id="totalStudents">0</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card green-gradient">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
-                            <span class="material-symbols-outlined fs-2 text-dark">check_circle</span>
-                        </div>
-                        <div>
-                            <p class="mb-1 opacity-75">Present Today</p>
-                            <h3 class="mb-0" id="presentToday">0</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card yellow-gradient">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
-                            <span class="material-symbols-outlined fs-2 text-dark">cancel</span>
-                        </div>
-                        <div>
-                            <p class="mb-1 opacity-75">Absent Today</p>
-                            <h3 class="mb-0" id="absentToday">0</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card blue-gradient">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
-                            <span class="material-symbols-outlined fs-2 text-dark">payments</span>
-                        </div>
-                        <div>
-                            <p class="mb-1 opacity-75">Fees Paid</p>
-                            <h3 class="mb-0" id="paidStudents">0</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card red-gradient">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-white bg-opacity-20 p-3 rounded-circle me-3">
-                            <span class="material-symbols-outlined fs-2 text-dark">warning</span>
-                        </div>
-                        <div>
-                            <p class="mb-1 opacity-75">Fees Unpaid</p>
-                            <h3 class="mb-0" id="unpaidStudents">0</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scanner Controls Section -->
+      
+            <!-- Attendance Reports Section -->
             <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header">
                     <h5>
-                        <span class="material-symbols-outlined">qr_code_scanner</span>
-                        Scanner Controls & Time Selection
+                        <span class="material-symbols-outlined">analytics</span>
+                        Attendance Reports
                     </h5>
                 </div>
                 <div class="card-body">
-                    <div class="row g-3">
-                        <!-- Scanner Buttons -->
-                        <div class="col-lg-6">
-                            <div class="scanner-controls">
-                                <button id="qrScannerBtn" class="btn btn-outline-primary">
-                                    <span class="material-symbols-outlined">qr_code_scanner</span>
-                                    QR Scanner
-                                </button>
-                                <button id="smartCardBtn" class="btn btn-outline-success">
-                                    <span class="material-symbols-outlined">credit_card</span>
-                                    Smart Card
-                                </button>
+                    <!-- Report Type Tabs -->
+                    <ul class="nav nav-tabs" id="reportTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="daily-report-tab" data-bs-toggle="tab" data-bs-target="#daily-report" type="button" role="tab">
+                                <span class="material-symbols-outlined">today</span>
+                                Daily Report
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="monthly-report-tab" data-bs-toggle="tab" data-bs-target="#monthly-report" type="button" role="tab">
+                                <span class="material-symbols-outlined">calendar_month</span>
+                                Monthly Report
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="reportTabContent">
+                        <!-- Daily Report Tab -->
+                        <div class="tab-pane fade show active" id="daily-report" role="tabpanel">
+                            <div class="report-controls">
+                                <div class="row g-3 align-items-end">
+                                    <div class="col-md-3">
+                                        <label for="dailyReportDate" class="form-label">Select Date</label>
+                                        <input type="date" class="form-control" id="dailyReportDate" value="2025-09-17">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="dailyReportClass" class="form-label">Select Class</label>
+                                        <select class="form-select" id="dailyReportClass">
+                                            <option value="">All Classes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-primary" id="generateDailyReportBtn">
+                                                <span class="material-symbols-outlined">search</span>
+                                                Generate Report
+                                            </button>
+                                            <button class="btn btn-success" id="downloadDailyReportBtn" disabled>
+                                                <span class="material-symbols-outlined">download</span>
+                                                Download CSV
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="scannerStatus" class="scanner-status">Ready for scan...</div>
+                            <div id="dailyReportContent" class="report-content">
+                                <div class="empty-state">
+                                    <span class="material-symbols-outlined">analytics</span>
+                                    <p>Select a date and class to generate daily attendance report</p>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <!-- Month/Year/Date Selectors -->
-                        <div class="col-lg-6">
-                            <div class="date-selectors">
-                                <div class="date-inputs-row">
-                                    <div class="date-selector">
-                                        <label for="monthSelect" class="form-label">Month</label>
-                                        <select class="form-select" id="monthSelect">
+
+                        <!-- Monthly Report Tab -->
+                        <div class="tab-pane fade" id="monthly-report" role="tabpanel">
+                            <div class="report-controls">
+                                <div class="row g-3 align-items-end">
+                                    <div class="col-md-3">
+                                        <label for="monthlyReportMonth" class="form-label">Select Month</label>
+                                        <select class="form-select" id="monthlyReportMonth">
                                             <option value="0">January</option>
                                             <option value="1">February</option>
                                             <option value="2">March</option>
@@ -211,9 +149,9 @@
                                             <option value="11">December</option>
                                         </select>
                                     </div>
-                                    <div class="date-selector">
-                                        <label for="yearSelect" class="form-label">Year</label>
-                                        <select class="form-select" id="yearSelect">
+                                    <div class="col-md-3">
+                                        <label for="monthlyReportYear" class="form-label">Select Year</label>
+                                        <select class="form-select" id="monthlyReportYear">
                                             <option value="2023">2023</option>
                                             <option value="2024">2024</option>
                                             <option value="2025" selected>2025</option>
@@ -221,124 +159,32 @@
                                             <option value="2027">2027</option>
                                         </select>
                                     </div>
-                                    <div class="date-selector">
-                                        <label for="dateSelect" class="form-label">Date</label>
-                                        <select class="form-select" id="dateSelect">
-                                            <!-- Dates will be populated dynamically based on month/year -->
+                                    <div class="col-md-3">
+                                        <label for="monthlyReportClass" class="form-label">Select Class</label>
+                                        <select class="form-select" id="monthlyReportClass">
+                                            <option value="">All Classes</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="date-navigation-actions">
-                                    <button type="button" class="btn btn-primary btn-sm" id="loadAttendanceBtn">
-                                        <span class="material-symbols-outlined">refresh</span>
-                                        Load Attendance
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" id="todayBtn">
-                                        <span class="material-symbols-outlined">today</span>
-                                        Today
-                                    </button>
+                                    <div class="col-md-3">
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-primary" id="generateMonthlyReportBtn">
+                                                <span class="material-symbols-outlined">search</span>
+                                                Generate Report
+                                            </button>
+                                            <button class="btn btn-success" id="downloadMonthlyReportBtn" disabled>
+                                                <span class="material-symbols-outlined">download</span>
+                                                Download CSV
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Class Tabs Section -->
-            <div class="card">
-                <div class="card-header">
-                    <h5>
-                        <span class="material-symbols-outlined">school</span>
-                        Class Selection
-                    </h5>
-                </div>
-                <div class="card-body p-0">
-                    <div id="classTabs" class="class-tabs">
-                        <!-- Class tabs will be dynamically generated here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Preload Access -->
-            <div class="card">
-                <div class="card-header card-header-primary">
-                    <h5>
-                        <span class="material-symbols-outlined">flash_on</span>
-                        Student Preload Management
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted mb-3">Manage and preload students for attendance tracking</p>
-                    <div class="d-flex gap-2 flex-wrap">
-                        <a href="preload.html" class="btn btn-primary">
-                            <span class="material-symbols-outlined">groups</span>
-                            Go to Preload Page
-                        </a>
-                        <button id="loadPreloadedBtn" class="btn btn-outline-success">
-                            <span class="material-symbols-outlined">download</span>
-                            Load Preloaded Students
-                        </button>
-                        <button id="clearPreloadedBtn" class="btn btn-outline-danger">
-                            <span class="material-symbols-outlined">clear_all</span>
-                            Clear Preloaded Data
-                        </button>
-                    </div>
-                    <div id="preloadStatus" class="mt-3 p-3 bg-light rounded preload-status-hidden">
-                        <small class="text-muted">
-                            <span class="material-symbols-outlined">info</span>
-                            <span id="preloadStatusText">No preloaded students</span>
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Attendance Controls -->
-            <div class="card">
-                <div class="card-header">
-                    <h5>
-                        <span class="material-symbols-outlined">checklist</span>
-                        Attendance Controls
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="attendance-controls">
-                        <button id="markAllPresentBtn" class="btn btn-success">
-                            <span class="material-symbols-outlined">check_circle</span>
-                            Mark All Present
-                        </button>
-                        <button id="markAllAbsentBtn" class="btn btn-warning">
-                            <span class="material-symbols-outlined">cancel</span>
-                            Mark All Absent
-                        </button>
-                        <button id="saveAttendanceBtn" class="btn btn-primary">
-                            <span class="material-symbols-outlined">save</span>
-                            Save Attendance
-                        </button>
-                        <button id="addStudentBtn" class="btn btn-info">
-                            <span class="material-symbols-outlined">person_add</span>
-                            Add Student
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Student List Section -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-header-content">
-                        <h5>
-                            <span class="material-symbols-outlined">format_list_bulleted</span>
-                            Student Attendance List
-                        </h5>
-                        <span id="studentCount" class="badge bg-primary">0 students</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="studentList" class="student-list">
-                        <!-- Student items will be dynamically generated here -->
-                        <div class="empty-state">
-                            <span class="material-symbols-outlined">groups</span>
-                            <p>Select a class to view students</p>
+                            <div id="monthlyReportContent" class="report-content">
+                                <div class="empty-state">
+                                    <span class="material-symbols-outlined">analytics</span>
+                                    <p>Select month, year and class to generate monthly attendance report</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -645,138 +491,7 @@
             crossorigin="anonymous"></script>
     
     <!-- Enhanced Multi-Class Attendance JavaScript -->
-    <script src="scripts/attendance.js"></script>
-    
-    <!-- Date Display Script -->
-    <script>
-        // Update current date display
-        function updateCurrentDate() {
-            const currentDate = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
-            const formattedDate = currentDate.toLocaleDateString('en-US', options);
-            document.getElementById('currentDate').textContent = formattedDate;
-        }
-        
-        // Populate date dropdown based on selected month and year
-        function populateDateDropdown() {
-            const monthSelect = document.getElementById('monthSelect');
-            const yearSelect = document.getElementById('yearSelect');
-            const dateSelect = document.getElementById('dateSelect');
-            
-            const selectedMonth = parseInt(monthSelect.value);
-            const selectedYear = parseInt(yearSelect.value);
-            
-            // Clear existing options
-            dateSelect.innerHTML = '';
-            
-            // Get number of days in the selected month
-            const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
-            
-            // Add date options
-            for (let day = 1; day <= daysInMonth; day++) {
-                const option = document.createElement('option');
-                option.value = day;
-                option.textContent = day;
-                
-                // Select current date if it's the current month/year
-                const today = new Date();
-                if (selectedMonth === today.getMonth() && 
-                    selectedYear === today.getFullYear() && 
-                    day === today.getDate()) {
-                    option.selected = true;
-                }
-                
-                dateSelect.appendChild(option);
-            }
-        }
-        
-        // Load attendance for selected date
-        function loadAttendanceForDate() {
-            const monthSelect = document.getElementById('monthSelect');
-            const yearSelect = document.getElementById('yearSelect');
-            const dateSelect = document.getElementById('dateSelect');
-            
-            const selectedDate = new Date(
-                parseInt(yearSelect.value),
-                parseInt(monthSelect.value),
-                parseInt(dateSelect.value)
-            );
-            
-            const formattedDate = selectedDate.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            // Update the current date display to show selected date
-            document.getElementById('currentDate').textContent = formattedDate;
-            
-            // Here you would typically load attendance data for the selected date
-            console.log('Loading attendance for:', formattedDate);
-            
-            // Show toast notification
-            showToast('Date Changed', `Attendance loaded for ${formattedDate}`, 'info');
-        }
-        
-        // Go to today's date
-        function goToToday() {
-            const today = new Date();
-            document.getElementById('monthSelect').value = today.getMonth();
-            document.getElementById('yearSelect').value = today.getFullYear();
-            populateDateDropdown();
-            // Date will be auto-selected in populateDateDropdown
-            loadAttendanceForDate();
-        }
-        
-        // Show toast notification
-        function showToast(title, message, type = 'success') {
-            const toast = document.getElementById('notificationToast');
-            const toastTitle = document.getElementById('toastTitle');
-            const toastMessage = document.getElementById('toastMessage');
-            const toastIcon = document.getElementById('toastIcon');
-            
-            toastTitle.textContent = title;
-            toastMessage.textContent = message;
-            
-            // Set icon based on type
-            switch(type) {
-                case 'success':
-                    toastIcon.textContent = 'check_circle';
-                    break;
-                case 'info':
-                    toastIcon.textContent = 'info';
-                    break;
-                case 'warning':
-                    toastIcon.textContent = 'warning';
-                    break;
-                case 'error':
-                    toastIcon.textContent = 'error';
-                    break;
-            }
-            
-            const bsToast = new bootstrap.Toast(toast);
-            bsToast.show();
-        }
-        
-        // Initialize date display and controls when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCurrentDate();
-            populateDateDropdown();
-            
-            // Update date every minute to keep it current
-            setInterval(updateCurrentDate, 60000);
-            
-            // Add event listeners for date controls
-            document.getElementById('monthSelect').addEventListener('change', populateDateDropdown);
-            document.getElementById('yearSelect').addEventListener('change', populateDateDropdown);
-            document.getElementById('loadAttendanceBtn').addEventListener('click', loadAttendanceForDate);
-            document.getElementById('todayBtn').addEventListener('click', goToToday);
-        });
-    </script>
+    <script src="./scripts/attendance.js"></script>
+    <script src="./scripts/attendance-date.js"></script>
 </body>
 </html>

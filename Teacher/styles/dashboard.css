@@ -109,11 +109,10 @@ body {
     color: white;
     text-decoration: none;
 }
-
+/* Sidebar Footer */
 .sidebar-footer {
-    padding: 20px;
-    border-top: 1px solid #e2e8f0;
-    margin-top: auto;
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
 }
 
 .sign-out-btn {
@@ -137,17 +136,7 @@ body {
     color: var(--danger-color);
 }
 
-.sign-out-btn:active {
-    transform: translateY(0);
-}
 
-.sign-out-icon {
-    font-size: 18px;
-}
-
-.sign-out-text {
-    font-size: 16px;
-}
 
 /* Main Content */
 .main-content {

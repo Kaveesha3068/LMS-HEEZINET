@@ -1,3 +1,26 @@
+/* Sign Out Button */
+.sign-out-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    position: relative;
+    top: -50px;
+}
+
+.sign-out-btn:hover {
+    background: var(--danger-light);
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
 /* Students Page Styles */
 
 .main-content {

@@ -114,6 +114,9 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -164,6 +167,8 @@ body {
     min-height: 100vh;
     width: 100vw;
     overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
 }
 
 /* ===== SIDEBAR STYLES ===== */
@@ -176,6 +181,8 @@ body {
     transition: var(--transition-normal);
     z-index: 1000;
     box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 /* Logo Section */
@@ -271,10 +278,13 @@ body {
 
 /* ===== MAIN CONTENT AREA ===== */
 .main-content {
-    flex: 1;
+    flex: 1 1 auto;
+    width: calc(100vw - 280px);
+    min-width: 0;
     padding: var(--spacing-xl);
     overflow-y: auto;
     max-height: 100vh;
+    box-sizing: border-box;
 }
 
 /* ===== HEADER STYLES ===== */
@@ -1379,7 +1389,7 @@ body {
     }
     
     .main-content {
-        width: 100%;
+        width: 100vw;
         margin-left: 0;
         padding: var(--spacing-md);
         padding-top: 4rem;
@@ -1595,6 +1605,7 @@ body {
     .main-content {
         margin-left: 0;
         padding: 0;
+        width: 100%;
     }
     
     .card {
@@ -1642,4 +1653,199 @@ body {
 /* Hidden elements */
 .scan-results.hidden {
     display: none;
+}
+
+/* ===== ATTENDANCE REPORTS STYLES ===== */
+.report-controls {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--gray-50);
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+}
+
+.report-content {
+    min-height: 300px;
+}
+
+.report-content .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+    color: var(--gray-500);
+}
+
+.report-content .empty-state .material-symbols-outlined {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Report Tables */
+.attendance-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.attendance-report-table th,
+.attendance-report-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.attendance-report-table th {
+    background: var(--gray-100);
+    font-weight: 600;
+    color: var(--gray-700);
+    border-bottom: 2px solid var(--gray-300);
+}
+
+.attendance-report-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.attendance-report-table .student-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.attendance-report-table .student-id {
+    color: var(--gray-500);
+    font-size: 0.875rem;
+}
+
+.attendance-report-table .status-present {
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+.attendance-report-table .status-absent {
+    color: var(--danger-color);
+    font-weight: 500;
+}
+
+.attendance-report-table .status-not-recorded {
+    color: var(--gray-400);
+    font-style: italic;
+}
+
+/* Report Summary Cards */
+.report-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    text-align: center;
+}
+
+.summary-card .summary-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.summary-card .summary-label {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Monthly Report Calendar View */
+.monthly-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-top: 1rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.calendar-day.today {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 700;
+}
+
+.calendar-day.has-attendance {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.calendar-day.no-attendance {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+.calendar-header {
+    display: contents;
+}
+
+.calendar-header .calendar-day {
+    background: var(--gray-200);
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+/* Download Button Styles */
+#downloadDailyReportBtn:disabled,
+#downloadMonthlyReportBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive Design for Reports */
+@media (max-width: 768px) {
+    .report-controls .row {
+        flex-direction: column;
+    }
+    
+    .report-controls .col-md-3,
+    .report-controls .col-md-6 {
+        margin-bottom: 1rem;
+    }
+    
+    .attendance-report-table {
+        font-size: 0.875rem;
+    }
+    
+    .attendance-report-table th,
+    .attendance-report-table td {
+        padding: 0.5rem;
+    }
+    
+    .report-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .summary-card {
+        padding: 1rem;
+    }
+    
+    .summary-card .summary-value {
+        font-size: 1.5rem;
+    }
 }

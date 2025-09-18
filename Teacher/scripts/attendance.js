@@ -1626,6 +1626,503 @@ class AttendanceManager {
             }
         }
     }
+
+    // ===== ATTENDANCE REPORTS FUNCTIONALITY =====
+
+    /**
+     * Initialize attendance reports functionality
+     */
+    initializeReports() {
+        this.setupReportEventListeners();
+        this.populateReportClassSelectors();
+    }
+
+    /**
+     * Set up event listeners for report functionality
+     */
+    setupReportEventListeners() {
+        // Daily report
+        const generateDailyReportBtn = document.getElementById('generateDailyReportBtn');
+        const downloadDailyReportBtn = document.getElementById('downloadDailyReportBtn');
+        
+        if (generateDailyReportBtn) {
+            generateDailyReportBtn.addEventListener('click', () => this.generateDailyReport());
+        }
+        
+        if (downloadDailyReportBtn) {
+            downloadDailyReportBtn.addEventListener('click', () => this.downloadDailyReport());
+        }
+        
+        // Monthly report
+        const generateMonthlyReportBtn = document.getElementById('generateMonthlyReportBtn');
+        const downloadMonthlyReportBtn = document.getElementById('downloadMonthlyReportBtn');
+        
+        if (generateMonthlyReportBtn) {
+            generateMonthlyReportBtn.addEventListener('click', () => this.generateMonthlyReport());
+        }
+        
+        if (downloadMonthlyReportBtn) {
+            downloadMonthlyReportBtn.addEventListener('click', () => this.downloadMonthlyReport());
+        }
+    }
+
+    /**
+     * Populate class selectors in report sections
+     */
+    populateReportClassSelectors() {
+        const dailyClassSelect = document.getElementById('dailyReportClass');
+        const monthlyClassSelect = document.getElementById('monthlyReportClass');
+        
+        const classes = this.getClasses();
+        
+        // Clear existing options except "All Classes"
+        [dailyClassSelect, monthlyClassSelect].forEach(select => {
+            if (select) {
+                const allClassesOption = select.querySelector('option[value=""]');
+                select.innerHTML = '';
+                if (allClassesOption) {
+                    select.appendChild(allClassesOption);
+                }
+            }
+        });
+        
+        // Add class options
+        classes.forEach(classItem => {
+            const option = document.createElement('option');
+            option.value = classItem.id;
+            option.textContent = classItem.name;
+            
+            if (dailyClassSelect) dailyClassSelect.appendChild(option.cloneNode(true));
+            if (monthlyClassSelect) monthlyClassSelect.appendChild(option);
+        });
+    }
+
+    /**
+     * Generate daily attendance report
+     */
+    generateDailyReport() {
+        const dateInput = document.getElementById('dailyReportDate');
+        const classSelect = document.getElementById('dailyReportClass');
+        const contentDiv = document.getElementById('dailyReportContent');
+        const downloadBtn = document.getElementById('downloadDailyReportBtn');
+        
+        if (!dateInput || !contentDiv) return;
+        
+        const selectedDate = new Date(dateInput.value);
+        const selectedClass = classSelect ? classSelect.value : '';
+        
+        if (!selectedDate || isNaN(selectedDate.getTime())) {
+            this.showNotification('Please select a valid date', 'error');
+            return;
+        }
+        
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth();
+        const date = selectedDate.getDate();
+        
+        // Get attendance data
+        const attendanceData = this.getAttendanceData();
+        const students = this.getStudents();
+        
+        // Filter students by class if specified
+        const filteredStudents = selectedClass ? 
+            students.filter(student => student.classId === selectedClass) : 
+            students;
+        
+        // Generate report data
+        const reportData = [];
+        let presentCount = 0;
+        let absentCount = 0;
+        
+        filteredStudents.forEach(student => {
+            const key = `${student.classId}_${year}_${month}_${date}`;
+            const attendance = attendanceData[key] && attendanceData[key][student.id];
+            
+            let status = 'Not Recorded';
+            if (attendance === true) {
+                status = 'Present';
+                presentCount++;
+            } else if (attendance === false) {
+                status = 'Absent';
+                absentCount++;
+            }
+            
+            reportData.push({
+                studentId: student.id,
+                studentName: student.name,
+                className: this.getClassName(student.classId),
+                status: status,
+                date: selectedDate.toLocaleDateString()
+            });
+        });
+        
+        // Store report data for download
+        this.dailyReportData = {
+            date: selectedDate.toLocaleDateString(),
+            class: selectedClass ? this.getClassName(selectedClass) : 'All Classes',
+            data: reportData,
+            summary: {
+                total: reportData.length,
+                present: presentCount,
+                absent: absentCount,
+                attendanceRate: reportData.length > 0 ? ((presentCount / reportData.length) * 100).toFixed(1) : 0
+            }
+        };
+        
+        // Render report
+        this.renderDailyReport(contentDiv);
+        
+        // Enable download button
+        if (downloadBtn) {
+            downloadBtn.disabled = false;
+        }
+        
+        this.showNotification('Daily report generated successfully', 'success');
+    }
+
+    /**
+     * Render daily report in the content area
+     */
+    renderDailyReport(container) {
+        if (!this.dailyReportData) return;
+        
+        const { data, summary, date, class: className } = this.dailyReportData;
+        
+        container.innerHTML = `
+            <div class="report-summary">
+                <div class="summary-card">
+                    <div class="summary-value">${summary.total}</div>
+                    <div class="summary-label">Total Students</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value">${summary.present}</div>
+                    <div class="summary-label">Present</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value">${summary.absent}</div>
+                    <div class="summary-label">Absent</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value">${summary.attendanceRate}%</div>
+                    <div class="summary-label">Attendance Rate</div>
+                </div>
+            </div>
+            
+            <h6 class="mt-4 mb-3">Daily Attendance Report - ${date} (${className})</h6>
+            
+            <div class="table-responsive">
+                <table class="attendance-report-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(row => `
+                            <tr>
+                                <td>${row.studentId}</td>
+                                <td>
+                                    <div class="student-name">${row.studentName}</div>
+                                </td>
+                                <td>${row.className}</td>
+                                <td>
+                                    <span class="status-${row.status.toLowerCase().replace(' ', '-')}">${row.status}</span>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    /**
+     * Generate monthly attendance report
+     */
+    generateMonthlyReport() {
+        const monthSelect = document.getElementById('monthlyReportMonth');
+        const yearSelect = document.getElementById('monthlyReportYear');
+        const classSelect = document.getElementById('monthlyReportClass');
+        const contentDiv = document.getElementById('monthlyReportContent');
+        const downloadBtn = document.getElementById('downloadMonthlyReportBtn');
+        
+        if (!monthSelect || !yearSelect || !contentDiv) return;
+        
+        const selectedMonth = parseInt(monthSelect.value);
+        const selectedYear = parseInt(yearSelect.value);
+        const selectedClass = classSelect ? classSelect.value : '';
+        
+        // Get attendance data
+        const attendanceData = this.getAttendanceData();
+        const students = this.getStudents();
+        
+        // Filter students by class if specified
+        const filteredStudents = selectedClass ? 
+            students.filter(student => student.classId === selectedClass) : 
+            students;
+        
+        // Get days in month
+        const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+        
+        // Generate monthly report data
+        const reportData = [];
+        const calendarData = [];
+        
+        // Initialize calendar data
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(selectedYear, selectedMonth, day);
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            
+            calendarData.push({
+                day: day,
+                dayName: dayName,
+                date: date,
+                hasAttendance: false,
+                attendanceCount: 0
+            });
+        }
+        
+        filteredStudents.forEach(student => {
+            let monthlyPresent = 0;
+            let monthlyAbsent = 0;
+            let monthlyNotRecorded = 0;
+            
+            const dailyAttendance = [];
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const key = `${student.classId}_${selectedYear}_${selectedMonth}_${day}`;
+                const attendance = attendanceData[key] && attendanceData[key][student.id];
+                
+                let status = 'Not Recorded';
+                if (attendance === true) {
+                    status = 'Present';
+                    monthlyPresent++;
+                    calendarData[day - 1].attendanceCount++;
+                    calendarData[day - 1].hasAttendance = true;
+                } else if (attendance === false) {
+                    status = 'Absent';
+                    monthlyAbsent++;
+                } else {
+                    monthlyNotRecorded++;
+                }
+                
+                dailyAttendance.push(status);
+            }
+            
+            const totalDays = monthlyPresent + monthlyAbsent;
+            const attendanceRate = totalDays > 0 ? ((monthlyPresent / totalDays) * 100).toFixed(1) : 0;
+            
+            reportData.push({
+                studentId: student.id,
+                studentName: student.name,
+                className: this.getClassName(student.classId),
+                present: monthlyPresent,
+                absent: monthlyAbsent,
+                notRecorded: monthlyNotRecorded,
+                attendanceRate: attendanceRate,
+                dailyAttendance: dailyAttendance
+            });
+        });
+        
+        // Store report data for download
+        this.monthlyReportData = {
+            month: new Date(selectedYear, selectedMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+            class: selectedClass ? this.getClassName(selectedClass) : 'All Classes',
+            data: reportData,
+            calendarData: calendarData,
+            summary: {
+                totalStudents: reportData.length,
+                averageAttendance: reportData.length > 0 ? 
+                    (reportData.reduce((sum, student) => sum + parseFloat(student.attendanceRate), 0) / reportData.length).toFixed(1) : 0
+            }
+        };
+        
+        // Render report
+        this.renderMonthlyReport(contentDiv);
+        
+        // Enable download button
+        if (downloadBtn) {
+            downloadBtn.disabled = false;
+        }
+        
+        this.showNotification('Monthly report generated successfully', 'success');
+    }
+
+    /**
+     * Render monthly report in the content area
+     */
+    renderMonthlyReport(container) {
+        if (!this.monthlyReportData) return;
+        
+        const { data, calendarData, summary, month, class: className } = this.monthlyReportData;
+        
+        container.innerHTML = `
+            <div class="report-summary">
+                <div class="summary-card">
+                    <div class="summary-value">${summary.totalStudents}</div>
+                    <div class="summary-label">Total Students</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value">${summary.averageAttendance}%</div>
+                    <div class="summary-label">Avg Attendance Rate</div>
+                </div>
+            </div>
+            
+            <h6 class="mt-4 mb-3">Monthly Attendance Report - ${month} (${className})</h6>
+            
+            <!-- Calendar View -->
+            <div class="mb-4">
+                <h6 class="mb-3">Attendance Calendar</h6>
+                <div class="monthly-calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-day">Sun</div>
+                        <div class="calendar-day">Mon</div>
+                        <div class="calendar-day">Tue</div>
+                        <div class="calendar-day">Wed</div>
+                        <div class="calendar-day">Thu</div>
+                        <div class="calendar-day">Fri</div>
+                        <div class="calendar-day">Sat</div>
+                    </div>
+                    ${calendarData.map(day => `
+                        <div class="calendar-day ${day.hasAttendance ? 'has-attendance' : 'no-attendance'} ${this.isToday(day.date) ? 'today' : ''}">
+                            ${day.day}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <!-- Student Summary Table -->
+            <h6 class="mb-3">Student Attendance Summary</h6>
+            <div class="table-responsive">
+                <table class="attendance-report-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                            <th>Not Recorded</th>
+                            <th>Attendance Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(row => `
+                            <tr>
+                                <td>${row.studentId}</td>
+                                <td>
+                                    <div class="student-name">${row.studentName}</div>
+                                </td>
+                                <td>${row.className}</td>
+                                <td>${row.present}</td>
+                                <td>${row.absent}</td>
+                                <td>${row.notRecorded}</td>
+                                <td>${row.attendanceRate}%</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    /**
+     * Check if a date is today
+     */
+    isToday(date) {
+        const today = new Date();
+        return date.toDateString() === today.toDateString();
+    }
+
+    /**
+     * Get class name by ID
+     */
+    getClassName(classId) {
+        const classes = this.getClasses();
+        const classItem = classes.find(c => c.id === classId);
+        return classItem ? classItem.name : classId;
+    }
+
+    /**
+     * Download daily report as CSV
+     */
+    downloadDailyReport() {
+        if (!this.dailyReportData) {
+            this.showNotification('No report data available', 'error');
+            return;
+        }
+        
+        const { data, summary, date, class: className } = this.dailyReportData;
+        
+        // Create CSV content
+        let csvContent = `Daily Attendance Report - ${date} (${className})\n\n`;
+        csvContent += `Summary:\n`;
+        csvContent += `Total Students,${summary.total}\n`;
+        csvContent += `Present,${summary.present}\n`;
+        csvContent += `Absent,${summary.absent}\n`;
+        csvContent += `Attendance Rate,${summary.attendanceRate}%\n\n`;
+        
+        csvContent += `Student Details:\n`;
+        csvContent += `Student ID,Student Name,Class,Status,Date\n`;
+        
+        data.forEach(row => {
+            csvContent += `${row.studentId},"${row.studentName}",${row.className},${row.status},${row.date}\n`;
+        });
+        
+        // Download CSV
+        this.downloadCSV(csvContent, `daily_attendance_${date.replace(/\//g, '-')}_${className.replace(/\s+/g, '_')}.csv`);
+    }
+
+    /**
+     * Download monthly report as CSV
+     */
+    downloadMonthlyReport() {
+        if (!this.monthlyReportData) {
+            this.showNotification('No report data available', 'error');
+            return;
+        }
+        
+        const { data, summary, month, class: className } = this.monthlyReportData;
+        
+        // Create CSV content
+        let csvContent = `Monthly Attendance Report - ${month} (${className})\n\n`;
+        csvContent += `Summary:\n`;
+        csvContent += `Total Students,${summary.totalStudents}\n`;
+        csvContent += `Average Attendance Rate,${summary.averageAttendance}%\n\n`;
+        
+        csvContent += `Student Summary:\n`;
+        csvContent += `Student ID,Student Name,Class,Present,Absent,Not Recorded,Attendance Rate\n`;
+        
+        data.forEach(row => {
+            csvContent += `${row.studentId},"${row.studentName}",${row.className},${row.present},${row.absent},${row.notRecorded},${row.attendanceRate}%\n`;
+        });
+        
+        // Download CSV
+        this.downloadCSV(csvContent, `monthly_attendance_${month.replace(/\s+/g, '_')}_${className.replace(/\s+/g, '_')}.csv`);
+    }
+
+    /**
+     * Download CSV file
+     */
+    downloadCSV(content, filename) {
+        const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        this.showNotification('Report downloaded successfully', 'success');
+    }
 }
 }
 
@@ -1643,6 +2140,9 @@ let attendanceManager;
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🎯 DOM loaded, initializing Attendance Manager...');
     attendanceManager = new AttendanceManager();
+    
+    // Initialize reports functionality
+    attendanceManager.initializeReports();
 });
 
 /**
@@ -1815,6 +2315,503 @@ function checkSession() {
     }
     
     return true;
+}
+
+// ===== ATTENDANCE REPORTS FUNCTIONALITY =====
+
+/**
+ * Initialize attendance reports functionality
+ */
+initializeReports() {
+    this.setupReportEventListeners();
+    this.populateReportClassSelectors();
+}
+
+/**
+ * Set up event listeners for report functionality
+ */
+setupReportEventListeners() {
+    // Daily report
+    const generateDailyReportBtn = document.getElementById('generateDailyReportBtn');
+    const downloadDailyReportBtn = document.getElementById('downloadDailyReportBtn');
+    
+    if (generateDailyReportBtn) {
+        generateDailyReportBtn.addEventListener('click', () => this.generateDailyReport());
+    }
+    
+    if (downloadDailyReportBtn) {
+        downloadDailyReportBtn.addEventListener('click', () => this.downloadDailyReport());
+    }
+    
+    // Monthly report
+    const generateMonthlyReportBtn = document.getElementById('generateMonthlyReportBtn');
+    const downloadMonthlyReportBtn = document.getElementById('downloadMonthlyReportBtn');
+    
+    if (generateMonthlyReportBtn) {
+        generateMonthlyReportBtn.addEventListener('click', () => this.generateMonthlyReport());
+    }
+    
+    if (downloadMonthlyReportBtn) {
+        downloadMonthlyReportBtn.addEventListener('click', () => this.downloadMonthlyReport());
+    }
+}
+
+/**
+ * Populate class selectors in report sections
+ */
+populateReportClassSelectors() {
+    const dailyClassSelect = document.getElementById('dailyReportClass');
+    const monthlyClassSelect = document.getElementById('monthlyReportClass');
+    
+    const classes = this.getClasses();
+    
+    // Clear existing options except "All Classes"
+    [dailyClassSelect, monthlyClassSelect].forEach(select => {
+        if (select) {
+            const allClassesOption = select.querySelector('option[value=""]');
+            select.innerHTML = '';
+            if (allClassesOption) {
+                select.appendChild(allClassesOption);
+            }
+        }
+    });
+    
+    // Add class options
+    classes.forEach(classItem => {
+        const option = document.createElement('option');
+        option.value = classItem.id;
+        option.textContent = classItem.name;
+        
+        if (dailyClassSelect) dailyClassSelect.appendChild(option.cloneNode(true));
+        if (monthlyClassSelect) monthlyClassSelect.appendChild(option);
+    });
+}
+
+/**
+ * Generate daily attendance report
+ */
+generateDailyReport() {
+    const dateInput = document.getElementById('dailyReportDate');
+    const classSelect = document.getElementById('dailyReportClass');
+    const contentDiv = document.getElementById('dailyReportContent');
+    const downloadBtn = document.getElementById('downloadDailyReportBtn');
+    
+    if (!dateInput || !contentDiv) return;
+    
+    const selectedDate = new Date(dateInput.value);
+    const selectedClass = classSelect ? classSelect.value : '';
+    
+    if (!selectedDate || isNaN(selectedDate.getTime())) {
+        this.showNotification('Please select a valid date', 'error');
+        return;
+    }
+    
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const date = selectedDate.getDate();
+    
+    // Get attendance data
+    const attendanceData = this.getAttendanceData();
+    const students = this.getStudents();
+    
+    // Filter students by class if specified
+    const filteredStudents = selectedClass ? 
+        students.filter(student => student.classId === selectedClass) : 
+        students;
+    
+    // Generate report data
+    const reportData = [];
+    let presentCount = 0;
+    let absentCount = 0;
+    
+    filteredStudents.forEach(student => {
+        const key = `${student.classId}_${year}_${month}_${date}`;
+        const attendance = attendanceData[key] && attendanceData[key][student.id];
+        
+        let status = 'Not Recorded';
+        if (attendance === true) {
+            status = 'Present';
+            presentCount++;
+        } else if (attendance === false) {
+            status = 'Absent';
+            absentCount++;
+        }
+        
+        reportData.push({
+            studentId: student.id,
+            studentName: student.name,
+            className: this.getClassName(student.classId),
+            status: status,
+            date: selectedDate.toLocaleDateString()
+        });
+    });
+    
+    // Store report data for download
+    this.dailyReportData = {
+        date: selectedDate.toLocaleDateString(),
+        class: selectedClass ? this.getClassName(selectedClass) : 'All Classes',
+        data: reportData,
+        summary: {
+            total: reportData.length,
+            present: presentCount,
+            absent: absentCount,
+            attendanceRate: reportData.length > 0 ? ((presentCount / reportData.length) * 100).toFixed(1) : 0
+        }
+    };
+    
+    // Render report
+    this.renderDailyReport(contentDiv);
+    
+    // Enable download button
+    if (downloadBtn) {
+        downloadBtn.disabled = false;
+    }
+    
+    this.showNotification('Daily report generated successfully', 'success');
+}
+
+/**
+ * Render daily report in the content area
+ */
+renderDailyReport(container) {
+    if (!this.dailyReportData) return;
+    
+    const { data, summary, date, class: className } = this.dailyReportData;
+    
+    container.innerHTML = `
+        <div class="report-summary">
+            <div class="summary-card">
+                <div class="summary-value">${summary.total}</div>
+                <div class="summary-label">Total Students</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">${summary.present}</div>
+                <div class="summary-label">Present</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">${summary.absent}</div>
+                <div class="summary-label">Absent</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">${summary.attendanceRate}%</div>
+                <div class="summary-label">Attendance Rate</div>
+            </div>
+        </div>
+        
+        <h6 class="mt-4 mb-3">Daily Attendance Report - ${date} (${className})</h6>
+        
+        <div class="table-responsive">
+            <table class="attendance-report-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(row => `
+                        <tr>
+                            <td>${row.studentId}</td>
+                            <td>
+                                <div class="student-name">${row.studentName}</div>
+                            </td>
+                            <td>${row.className}</td>
+                            <td>
+                                <span class="status-${row.status.toLowerCase().replace(' ', '-')}">${row.status}</span>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+/**
+ * Generate monthly attendance report
+ */
+generateMonthlyReport() {
+    const monthSelect = document.getElementById('monthlyReportMonth');
+    const yearSelect = document.getElementById('monthlyReportYear');
+    const classSelect = document.getElementById('monthlyReportClass');
+    const contentDiv = document.getElementById('monthlyReportContent');
+    const downloadBtn = document.getElementById('downloadMonthlyReportBtn');
+    
+    if (!monthSelect || !yearSelect || !contentDiv) return;
+    
+    const selectedMonth = parseInt(monthSelect.value);
+    const selectedYear = parseInt(yearSelect.value);
+    const selectedClass = classSelect ? classSelect.value : '';
+    
+    // Get attendance data
+    const attendanceData = this.getAttendanceData();
+    const students = this.getStudents();
+    
+    // Filter students by class if specified
+    const filteredStudents = selectedClass ? 
+        students.filter(student => student.classId === selectedClass) : 
+        students;
+    
+    // Get days in month
+    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+    
+    // Generate monthly report data
+    const reportData = [];
+    const calendarData = [];
+    
+    // Initialize calendar data
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(selectedYear, selectedMonth, day);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        
+        calendarData.push({
+            day: day,
+            dayName: dayName,
+            date: date,
+            hasAttendance: false,
+            attendanceCount: 0
+        });
+    }
+    
+    filteredStudents.forEach(student => {
+        let monthlyPresent = 0;
+        let monthlyAbsent = 0;
+        let monthlyNotRecorded = 0;
+        
+        const dailyAttendance = [];
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const key = `${student.classId}_${selectedYear}_${selectedMonth}_${day}`;
+            const attendance = attendanceData[key] && attendanceData[key][student.id];
+            
+            let status = 'Not Recorded';
+            if (attendance === true) {
+                status = 'Present';
+                monthlyPresent++;
+                calendarData[day - 1].attendanceCount++;
+                calendarData[day - 1].hasAttendance = true;
+            } else if (attendance === false) {
+                status = 'Absent';
+                monthlyAbsent++;
+            } else {
+                monthlyNotRecorded++;
+            }
+            
+            dailyAttendance.push(status);
+        }
+        
+        const totalDays = monthlyPresent + monthlyAbsent;
+        const attendanceRate = totalDays > 0 ? ((monthlyPresent / totalDays) * 100).toFixed(1) : 0;
+        
+        reportData.push({
+            studentId: student.id,
+            studentName: student.name,
+            className: this.getClassName(student.classId),
+            present: monthlyPresent,
+            absent: monthlyAbsent,
+            notRecorded: monthlyNotRecorded,
+            attendanceRate: attendanceRate,
+            dailyAttendance: dailyAttendance
+        });
+    });
+    
+    // Store report data for download
+    this.monthlyReportData = {
+        month: new Date(selectedYear, selectedMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+        class: selectedClass ? this.getClassName(selectedClass) : 'All Classes',
+        data: reportData,
+        calendarData: calendarData,
+        summary: {
+            totalStudents: reportData.length,
+            averageAttendance: reportData.length > 0 ? 
+                (reportData.reduce((sum, student) => sum + parseFloat(student.attendanceRate), 0) / reportData.length).toFixed(1) : 0
+        }
+    };
+    
+    // Render report
+    this.renderMonthlyReport(contentDiv);
+    
+    // Enable download button
+    if (downloadBtn) {
+        downloadBtn.disabled = false;
+    }
+    
+    this.showNotification('Monthly report generated successfully', 'success');
+}
+
+/**
+ * Render monthly report in the content area
+ */
+renderMonthlyReport(container) {
+    if (!this.monthlyReportData) return;
+    
+    const { data, calendarData, summary, month, class: className } = this.monthlyReportData;
+    
+    container.innerHTML = `
+        <div class="report-summary">
+            <div class="summary-card">
+                <div class="summary-value">${summary.totalStudents}</div>
+                <div class="summary-label">Total Students</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">${summary.averageAttendance}%</div>
+                <div class="summary-label">Avg Attendance Rate</div>
+            </div>
+        </div>
+        
+        <h6 class="mt-4 mb-3">Monthly Attendance Report - ${month} (${className})</h6>
+        
+        <!-- Calendar View -->
+        <div class="mb-4">
+            <h6 class="mb-3">Attendance Calendar</h6>
+            <div class="monthly-calendar">
+                <div class="calendar-header">
+                    <div class="calendar-day">Sun</div>
+                    <div class="calendar-day">Mon</div>
+                    <div class="calendar-day">Tue</div>
+                    <div class="calendar-day">Wed</div>
+                    <div class="calendar-day">Thu</div>
+                    <div class="calendar-day">Fri</div>
+                    <div class="calendar-day">Sat</div>
+                </div>
+                ${calendarData.map(day => `
+                    <div class="calendar-day ${day.hasAttendance ? 'has-attendance' : 'no-attendance'} ${this.isToday(day.date) ? 'today' : ''}">
+                        ${day.day}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        
+        <!-- Student Summary Table -->
+        <h6 class="mb-3">Student Attendance Summary</h6>
+        <div class="table-responsive">
+            <table class="attendance-report-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Not Recorded</th>
+                        <th>Attendance Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(row => `
+                        <tr>
+                            <td>${row.studentId}</td>
+                            <td>
+                                <div class="student-name">${row.studentName}</div>
+                            </td>
+                            <td>${row.className}</td>
+                            <td>${row.present}</td>
+                            <td>${row.absent}</td>
+                            <td>${row.notRecorded}</td>
+                            <td>${row.attendanceRate}%</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+/**
+ * Check if a date is today
+ */
+isToday(date) {
+    const today = new Date();
+    return date.toDateString() === today.toDateString();
+}
+
+/**
+ * Get class name by ID
+ */
+getClassName(classId) {
+    const classes = this.getClasses();
+    const classItem = classes.find(c => c.id === classId);
+    return classItem ? classItem.name : classId;
+}
+
+/**
+ * Download daily report as CSV
+ */
+downloadDailyReport() {
+    if (!this.dailyReportData) {
+        this.showNotification('No report data available', 'error');
+        return;
+    }
+    
+    const { data, summary, date, class: className } = this.dailyReportData;
+    
+    // Create CSV content
+    let csvContent = `Daily Attendance Report - ${date} (${className})\n\n`;
+    csvContent += `Summary:\n`;
+    csvContent += `Total Students,${summary.total}\n`;
+    csvContent += `Present,${summary.present}\n`;
+    csvContent += `Absent,${summary.absent}\n`;
+    csvContent += `Attendance Rate,${summary.attendanceRate}%\n\n`;
+    
+    csvContent += `Student Details:\n`;
+    csvContent += `Student ID,Student Name,Class,Status,Date\n`;
+    
+    data.forEach(row => {
+        csvContent += `${row.studentId},"${row.studentName}",${row.className},${row.status},${row.date}\n`;
+    });
+    
+    // Download CSV
+    this.downloadCSV(csvContent, `daily_attendance_${date.replace(/\//g, '-')}_${className.replace(/\s+/g, '_')}.csv`);
+}
+
+/**
+ * Download monthly report as CSV
+ */
+downloadMonthlyReport() {
+    if (!this.monthlyReportData) {
+        this.showNotification('No report data available', 'error');
+        return;
+    }
+    
+    const { data, summary, month, class: className } = this.monthlyReportData;
+    
+    // Create CSV content
+    let csvContent = `Monthly Attendance Report - ${month} (${className})\n\n`;
+    csvContent += `Summary:\n`;
+    csvContent += `Total Students,${summary.totalStudents}\n`;
+    csvContent += `Average Attendance Rate,${summary.averageAttendance}%\n\n`;
+    
+    csvContent += `Student Summary:\n`;
+    csvContent += `Student ID,Student Name,Class,Present,Absent,Not Recorded,Attendance Rate\n`;
+    
+    data.forEach(row => {
+        csvContent += `${row.studentId},"${row.studentName}",${row.className},${row.present},${row.absent},${row.notRecorded},${row.attendanceRate}%\n`;
+    });
+    
+    // Download CSV
+    this.downloadCSV(csvContent, `monthly_attendance_${month.replace(/\s+/g, '_')}_${className.replace(/\s+/g, '_')}.csv`);
+}
+
+/**
+ * Download CSV file
+ */
+downloadCSV(content, filename) {
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    
+    if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    
+    this.showNotification('Report downloaded successfully', 'success');
 }
 
 // Optional: Set up automatic session checking every 5 minutes

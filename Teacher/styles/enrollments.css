@@ -75,11 +75,6 @@ body {
     border-radius: 4px;
 }
 
-.nav-menu {
-    flex: 1;
-    padding: 0 10px;
-}
-
 .nav-item {
     padding: 12px 20px;
     margin: 8px 0;
@@ -105,9 +100,7 @@ body {
     background: #3b82f6;
     color: white;
     text-decoration: none;
-    font-weight: bold;
 }
-
 
 .sidebar-footer {
     padding: 20px;
