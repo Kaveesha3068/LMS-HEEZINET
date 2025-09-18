@@ -45,15 +45,16 @@
 
             <!-- Navigation Menu -->
             <div class="nav-menu">
-                <a href="dashboard.html" class="nav-item bold-text">📊 Dashboard</a>
+                <a href="dashboard.html" class="nav-item ">📊 Dashboard</a>
+                <a href="preload.html" class="nav-item bold-text ">🔄 Preload Students</a>
                 <a href="attendance.html" class="nav-item">📋 Attendance</a>
                 <a href="Messages.html" class="nav-item">💬 Messages</a>
                 <a href="calendar.html" class="nav-item">📅 Calendar</a>
                 <a href="Enrollments.html" class="nav-item">📋 Enrollments</a>
-                <a href="Courses.html" class="nav-item bold-text">📚 Courses</a>
+                <a href="Courses.html" class="nav-item ">📚 Courses</a>
                 <a href="Instructors.html" class="nav-item">👨‍🏫 Instructors</a>
                 <a href="Students.html" class="nav-item">👥 Students</a>
-                <a href="preload.html" class="nav-item active bold-text">🔄 Preload Students</a>
+                
                 <a href="Financials.html" class="nav-item">💰 Financials</a>
             </div>
 
@@ -173,17 +174,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="sectionSelect" class="form-label">Select Section</label>
-                                <select class="form-select" id="sectionSelect">
-                                    <option value="">Choose a section...</option>
-                                    <option value="A">Section A</option>
-                                    <option value="B">Section B</option>
-                                    <option value="C">Section C</option>
-                                </select>
-                            </div>
-                        </div>
+                    
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -203,11 +194,47 @@
             <!-- Preloaded Students Display -->
             <div class="card preloaded-students-card-hidden" id="preloadedStudentsCard">
                 <div class="card-header card-header-info">
-                    <h5>
-                        <span class="material-symbols-outlined">group</span>
-                        Preloaded Students
-                        <span class="badge bg-light text-dark ms-2" id="studentCount">0</span>
-                    </h5>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined">group</span>
+                            <h5 class="mb-0 ms-2">Preloaded Students</h5>
+                            <span class="badge bg-light text-dark ms-2" id="studentCount">0</span>
+                        </div>
+                        <button class="btn btn-primary" id="enrollStudentBtn" data-bs-toggle="modal" data-bs-target="#enrollStudentModal">
+                            <span class="material-symbols-outlined align-middle">person_add</span> Enroll New Student
+                        </button>
+                    </div>
+                                <!-- Enroll Student Modal -->
+                                <div class="modal fade" id="enrollStudentModal" tabindex="-1" aria-labelledby="enrollStudentModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="enrollStudentModalLabel">Enroll New Student</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="enrollStudentForm">
+                                                    <div class="mb-3">
+                                                        <label for="studentName" class="form-label">Name</label>
+                                                        <input type="text" class="form-control" id="studentName" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="studentEmail" class="form-label">Email</label>
+                                                        <input type="email" class="form-control" id="studentEmail" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="studentId" class="form-label">Student ID</label>
+                                                        <input type="text" class="form-control" id="studentId" required>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary" form="enrollStudentForm">Enroll</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                 </div>
                 <div class="card-body">
                     <div class="row">

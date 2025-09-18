@@ -18,38 +18,34 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
-   <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
 
-<div class="container d-flex flex-row" style="min-height:100vh;width:100vw;max-width:100vw;overflow:hidden;background:#fff;">
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="logo">
-            <img src="../../frontend/assets/images/logo.png" alt="logo" width="32" height="32">
-            <span>EduLMS</span>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+    <div class="app-container">
+        <!-- Sidebar Navigation (Standardized) -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img src="../../frontend/assets/images/logo.png" alt="EduLMS Logo" width="32" height="32">
+                <span>EduLMS</span>
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-item active">📊 Dashboard</a>
+                <a href="preload.html" class="nav-item">🔄 Preload Students</a>
+                <a href="attendance.html" class="nav-item">📋 Attendance</a>
+                <a href="Messages.html" class="nav-item">💬 Messages</a>
+                <a href="calendar.html" class="nav-item">📅 Calendar</a>
+                <a href="Enrollments.html" class="nav-item">📋 Enrollments</a>
+                <a href="Courses.html" class="nav-item">📚 Courses</a>
+                <a href="Instructors.html" class="nav-item">👨‍🏫 Instructors</a>
+                <a href="Students.html" class="nav-item">👥 Students</a>
+                <a href="Financials.html" class="nav-item">💰 Financials</a>
+            </div>
+            <div class="sidebar-footer">
+                <button class="sign-out-btn" onclick="handleSignOut()">
+                    <span class="sign-out-icon">🚪</span>
+                    <span class="sign-out-text">Sign Out</span>
+                </button>
+            </div>
         </div>
-
-        <div class="nav-menu">
-            <a href="dashboard.html" class="nav-item active" style="font-weight: bold;">📊 Dashboard</a>
-            <a href="preload.html" class="nav-item ">🔄 Preload Students</a>
-            <a href="attendance.html" class="nav-item">📋 Attendance</a>
-            <a href="Messages.html" class="nav-item">💬 Messages</a>
-            <a href="calendar.html" class="nav-item">📅 Calendar</a>
-            <a href="Enrollments.html" class="nav-item">📋 Enrollments</a>
-            <a href="Courses.html" class="nav-item " style="font-weight: bold;">📚 Courses</a>
-            <a href="Instructors.html" class="nav-item ">👨‍🏫 Instructors</a>
-             <a href="Students.html" class="nav-item ">👥 Students</a>
-            <a href="preload.html" class="nav-item" style="font-weight: bold;">🔄 Preload Students</a>
-            <a href="Financials.html" class="nav-item">💰 Financials</a>
-        </div>
-
-        <div class="sidebar-footer">
-            <button class="sign-out-btn" onclick="handleSignOut()">
-                <span class="sign-out-icon">🚪</span>
-                <span class="sign-out-text">Sign Out</span>
-            </button>
-        </div>
-    </div>
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -238,7 +234,7 @@
                 <div class="chart-container">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Revenue</h5>
-                        <select class="form-select form-select-sm" style="width: auto;">
+                        <select class="form-select form-select-sm chart-range-select" title="Select revenue range">
                             <option>Last 7 Months</option>
                             <option>Last 12 Months</option>
                         </select>
@@ -252,7 +248,7 @@
                 <div class="chart-container">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Enrollment Trends</h5>
-                        <select class="form-select form-select-sm" style="width: auto;">
+                        <select class="form-select form-select-sm dashboard-select-width" title="Filter recent activities by time period">
                             <option>Last 7 Months</option>
                             <option>Last 12 Months</option>
                         </select>
@@ -318,7 +314,7 @@
                 <div class="calendar-container">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Top Courses</h5>
-                        <select class="form-select form-select-sm" style="width: auto;">
+                        <select class="form-select form-select-sm dashboard-select-width" title="Filter top courses by time period">
                             <option>This Week</option>
                             <option>This Month</option>
                         </select>
@@ -355,7 +351,7 @@
                 <div class="calendar-container">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Recent Activities</h5>
-                        <select class="form-select form-select-sm" style="width: auto;">
+                        <select class="form-select form-select-sm dashboard-select-width" title="Filter recent activities by time period">
                             <option>This Week</option>
                             <option>This Month</option>
                         </select>
@@ -401,7 +397,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">New Courses</h5>
                 <div class="d-flex gap-2">
-                    <select class="form-select form-select-sm" style="width: auto;">
+                    <select class="form-select form-select-sm dashboard-select-width" title="Filter students demographic by time period">
                         <option>This Week</option>
                         <option>This Month</option>
                     </select>
@@ -423,7 +419,7 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-1">
-                                    <img src="https://via.placeholder.com/24x24/667eea/ffffff?text=A" class="rounded-circle" width="24" height="24">
+                                    <img src="https://via.placeholder.com/24x24/667eea/ffffff?text=A" class="rounded-circle" width="24" height="24" alt="Social Media Marketing Strategies Instructor">
                                     <span class="small">+280</span>
                                 </div>
                                 <div class="fw-bold text-success">$79</div>
@@ -445,7 +441,7 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-1">
-                                    <img src="https://via.placeholder.com/24x24/10b981/ffffff?text=B" class="rounded-circle" width="24" height="24">
+                                    <img src="https://via.placeholder.com/24x24/10b981/ffffff?text=B" class="rounded-circle" width="24" height="24" alt="Business Analytics with Excel Instructor">
                                     <span class="small">+300</span>
                                 </div>
                                 <div class="fw-bold text-success">$95</div>
@@ -467,7 +463,7 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-1">
-                                    <img src="https://via.placeholder.com/24x24/ef4444/ffffff?text=C" class="rounded-circle" width="24" height="24">
+                                    <img src="https://via.placeholder.com/24x24/ef4444/ffffff?text=C" class="rounded-circle" width="24" height="24" alt="UI/UX Design for Beginners Instructor">
                                     <span class="small">+320</span>
                                 </div>
                                 <div class="fw-bold text-success">$99</div>
@@ -484,7 +480,7 @@
                 <div class="calendar-container">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Students Demographic</h5>
-                        <select class="form-select form-select-sm" style="width: auto;">
+                        <select class="form-select form-select-sm dashboard-select-width" title="Filter students demographic by time period">
                             <option>This Week</option>
                             <option>This Month</option>
                         </select>

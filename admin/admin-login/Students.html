@@ -141,7 +141,7 @@
                 <div class="d-flex align-items-center gap-3">
                     <div class="sort-by">
                         <label style="font-size: 14px; color: #64748b; margin-right: 8px;">Sort by:</label>
-                        <select class="form-select" style="width: auto; font-size: 14px;">
+                        <select class="form-select sort-select" title="Sort students by">
                             <option>Popular</option>
                             <option>Name</option>
                             <option>Date</option>
@@ -436,7 +436,10 @@
                             <td><span class="status-badge suspended">Suspended</span></td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" class="form-check-input"></td>
+                            <td>
+                                <label for="studentCheckbox8" class="visually-hidden">Select student Isabella Clark</label>
+                                <input type="checkbox" class="form-check-input" id="studentCheckbox8" title="Select student Isabella Clark">
+                            </td>
                             <td>
                                 <div class="student-info">
                                     <img src="../../frontend/assets/images/instructor.png" alt="Isabella Clark">

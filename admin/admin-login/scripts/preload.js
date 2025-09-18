@@ -347,7 +347,11 @@ function displayPreloadedStudents() {
                     ${student.status}
                 </span>
             </td>
-            <td>
+            <td class="d-flex gap-2">
+                <button class="btn btn-sm ${student.status === 'Active' ? 'btn-outline-secondary' : 'btn-outline-success'} toggle-status-btn" data-index="${index}">
+                    <span class="material-symbols-outlined align-middle">${student.status === 'Active' ? 'toggle_off' : 'toggle_on'}</span>
+                    ${student.status === 'Active' ? 'Set Inactive' : 'Set Active'}
+                </button>
                 <button class="btn btn-sm btn-outline-danger" onclick="removeStudent(${index})">
                     <span class="material-symbols-outlined">person_remove</span>
                     Remove
@@ -355,6 +359,19 @@ function displayPreloadedStudents() {
             </td>
         `;
         tableBody.appendChild(row);
+    });
+
+    // Add event listeners for status toggle buttons
+    const toggleBtns = tableBody.querySelectorAll('.toggle-status-btn');
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const idx = parseInt(this.getAttribute('data-index'));
+            if (currentPreloadedStudents[idx]) {
+                currentPreloadedStudents[idx].status = currentPreloadedStudents[idx].status === 'Active' ? 'Inactive' : 'Active';
+                sessionStorage.setItem('preloadedStudents', JSON.stringify(currentPreloadedStudents));
+                displayPreloadedStudents();
+            }
+        });
     });
 }
 
