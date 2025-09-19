@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLMS - Assignments & Quizzes</title>
+    <link rel="icon" type="image/x-icon" href="../frontend/assets/images/EduLMS-icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/assignments.css">
+    <link rel="stylesheet" href="./styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="./scripts/assignments.js"></script>
+    <script src="./scripts/global-signout.js"></script>
+</head>
+<body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img src="../frontend/assets/images/logo.png" alt="logo" width="32" height="32">
+                <span>EduLMS</span>
+            </div>
+
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+                <a href="attendance.html" class="nav-item">📋 Attendance</a>
+                <a href="Messages.html" class="nav-item">💬 Messages</a>
+                <a href="calendar.html" class="nav-item">📅 Calendar</a>
+                <a href="Courses.html" class="nav-item">📚 Courses</a>
+                <a href="Students.html" class="nav-item">👥 Students</a>
+                <a href="assignments.html" class="nav-item active">📝 Assignments</a>
+                <a href="Financials.html" class="nav-item">💰 Financials</a>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="sign-out-btn" onclick="handleSignOut()">
+                    <span class="sign-out-icon">🚪</span>
+                    <span class="sign-out-text">Sign Out</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Header -->
+            <div class="header d-flex justify-content-between align-items-center mb-4">
+                <div class="header-left">
+                    <h2 class="mb-1">Assignments & Quizzes</h2>
+                    <div class="breadcrumb">
+                        <span>Teacher</span> / <span>Assignments & Quizzes</span>
+                    </div>
+                </div>
+                <div class="header-right d-flex align-items-center gap-3">
+                    <button class="btn btn-primary" onclick="showCreateModal()">
+                        <span class="material-symbols-outlined me-2">add</span>
+                        Create New
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="content-tabs mb-4">
+                <button class="tab-btn active" onclick="switchTab('assignments')" id="assignmentsTab">
+                    <span class="material-symbols-outlined">assignment</span>
+                    Assignments
+                </button>
+                <button class="tab-btn" onclick="switchTab('quizzes')" id="quizzesTab">
+                    <span class="material-symbols-outlined">quiz</span>
+                    Quizzes
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stats-card blue">
+                        <div class="stats-icon">
+                            <span class="material-symbols-outlined">assignment</span>
+                        </div>
+                        <div class="stats-info">
+                            <div class="stats-label">Total Assignments</div>
+                            <div class="stats-value" id="totalAssignments">12</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stats-card green">
+                        <div class="stats-icon">
+                            <span class="material-symbols-outlined">quiz</span>
+                        </div>
+                        <div class="stats-info">
+                            <div class="stats-label">Total Quizzes</div>
+                            <div class="stats-value" id="totalQuizzes">8</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stats-card orange">
+                        <div class="stats-icon">
+                            <span class="material-symbols-outlined">pending_actions</span>
+                        </div>
+                        <div class="stats-info">
+                            <div class="stats-label">Pending Reviews</div>
+                            <div class="stats-value" id="pendingReviews">24</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="stats-card purple">
+                        <div class="stats-icon">
+                            <span class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div class="stats-info">
+                            <div class="stats-label">Active Classes</div>
+                            <div class="stats-value" id="activeClasses">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter and Search -->
+            <div class="filter-section mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <select class="form-select" id="classFilter" aria-label="Class filter">
+                            <option value="">All Classes</option>
+                            <option value="math-101">Mathematics 101</option>
+                            <option value="science-201">Science 201</option>
+                            <option value="english-301">English 301</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" id="statusFilter" aria-label="Status filter">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="draft">Draft</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search assignments..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignments Tab Content -->
+            <div id="assignmentsContent" class="tab-content active">
+                <div class="assignments-container">
+                    <div class="assignment-card" data-type="assignment" data-class="math-101" data-status="active">
+                        <div class="assignment-header">
+                            <div class="assignment-title">
+                                <h5>Linear Algebra Problem Set</h5>
+                                <span class="class-badge">Mathematics 101</span>
+                            </div>
+                            <div class="assignment-actions">
+                                <button class="action-btn" onclick="editAssignment(1)">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="action-btn" onclick="duplicateAssignment(1)">
+                                    <span class="material-symbols-outlined">content_copy</span>
+                                </button>
+                                <button class="action-btn delete" onclick="deleteAssignment(1)">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="assignment-details">
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">schedule</span>
+                                Due: Oct 25, 2024 at 11:59 PM
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">groups</span>
+                                32 students assigned
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                18 submissions received
+                            </div>
+                        </div>
+                        <div class="assignment-status">
+                            <span class="status-badge active">Active</span>
+                            <span class="progress-text">56% completed</span>
+                        </div>
+                    </div>
+
+                    <div class="assignment-card" data-type="assignment" data-class="science-201" data-status="draft">
+                        <div class="assignment-header">
+                            <div class="assignment-title">
+                                <h5>Chemistry Lab Report</h5>
+                                <span class="class-badge">Science 201</span>
+                            </div>
+                            <div class="assignment-actions">
+                                <button class="action-btn" onclick="editAssignment(2)">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="action-btn" onclick="duplicateAssignment(2)">
+                                    <span class="material-symbols-outlined">content_copy</span>
+                                </button>
+                                <button class="action-btn delete" onclick="deleteAssignment(2)">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="assignment-details">
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">schedule</span>
+                                Due: Nov 5, 2024 at 11:59 PM
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">groups</span>
+                                28 students assigned
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">edit_note</span>
+                                Draft - Not published
+                            </div>
+                        </div>
+                        <div class="assignment-status">
+                            <span class="status-badge draft">Draft</span>
+                            <span class="progress-text">Not published</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quizzes Tab Content -->
+            <div id="quizzesContent" class="tab-content">
+                <div class="assignments-container">
+                    <div class="assignment-card quiz-card" data-type="quiz" data-class="english-301" data-status="active">
+                        <div class="assignment-header">
+                            <div class="assignment-title">
+                                <h5>Grammar and Vocabulary Quiz #3</h5>
+                                <span class="class-badge">English 301</span>
+                            </div>
+                            <div class="assignment-actions">
+                                <button class="action-btn" onclick="editQuiz(1)">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="action-btn" onclick="duplicateQuiz(1)">
+                                    <span class="material-symbols-outlined">content_copy</span>
+                                </button>
+                                <button class="action-btn delete" onclick="deleteQuiz(1)">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="assignment-details">
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">schedule</span>
+                                Due: Oct 20, 2024 at 2:00 PM
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">quiz</span>
+                                15 questions, 30 minutes
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">groups</span>
+                                25 students, 22 completed
+                            </div>
+                        </div>
+                        <div class="assignment-status">
+                            <span class="status-badge active">Active</span>
+                            <span class="progress-text">88% completed</span>
+                        </div>
+                    </div>
+
+                    <div class="assignment-card quiz-card" data-type="quiz" data-class="math-101" data-status="completed">
+                        <div class="assignment-header">
+                            <div class="assignment-title">
+                                <h5>Calculus Midterm Quiz</h5>
+                                <span class="class-badge">Mathematics 101</span>
+                            </div>
+                            <div class="assignment-actions">
+                                <button class="action-btn" onclick="viewResults(2)">
+                                    <span class="material-symbols-outlined">analytics</span>
+                                </button>
+                                <button class="action-btn" onclick="duplicateQuiz(2)">
+                                    <span class="material-symbols-outlined">content_copy</span>
+                                </button>
+                                <button class="action-btn delete" onclick="deleteQuiz(2)">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="assignment-details">
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">schedule</span>
+                                Completed: Oct 15, 2024
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">quiz</span>
+                                20 questions, 60 minutes
+                            </div>
+                            <div class="detail-item">
+                                <span class="material-symbols-outlined">grade</span>
+                                Average score: 78%
+                            </div>
+                        </div>
+                        <div class="assignment-status">
+                            <span class="status-badge completed">Completed</span>
+                            <span class="progress-text">100% completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Assignment/Quiz Modal -->
+    <div class="modal fade" id="createModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalTitle">Create New Assignment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Type Selection -->
+                    <div class="type-selection mb-4">
+                        <label class="form-label">Type</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="contentType" id="assignmentType" value="assignment" checked>
+                            <label class="btn btn-outline-primary" for="assignmentType">
+                                <span class="material-symbols-outlined me-2">assignment</span>
+                                Assignment
+                            </label>
+                            <input type="radio" class="btn-check" name="contentType" id="quizType" value="quiz">
+                            <label class="btn btn-outline-primary" for="quizType">
+                                <span class="material-symbols-outlined me-2">quiz</span>
+                                Quiz
+                            </label>
+                        </div>
+                    </div>
+
+                    <form id="createForm">
+                        <!-- Basic Information -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label">Title *</label>
+                                <input type="text" class="form-control" id="title" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="class" class="form-label">Class *</label>
+                                <select class="form-select" id="class" required>
+                                    <option value="">Select Class</option>
+                                    <option value="math-101">Mathematics 101</option>
+                                    <option value="science-201">Science 201</option>
+                                    <option value="english-301">English 301</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+
+                        <!-- Assignment Specific Fields -->
+                        <div id="assignmentFields">
+                            <div class="mb-3">
+                                <label for="instructions" class="form-label">Instructions</label>
+                                <textarea class="form-control" id="instructions" rows="4" placeholder="Provide detailed instructions for the assignment..."></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="maxPoints" class="form-label">Maximum Points</label>
+                                    <input type="number" class="form-control" id="maxPoints" min="1" value="100">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="submissionType" class="form-label">Submission Type</label>
+                                    <select class="form-select" id="submissionType">
+                                        <option value="file">File Upload</option>
+                                        <option value="text">Text Entry</option>
+                                        <option value="both">File Upload & Text Entry</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Specific Fields -->
+                        <div id="quizFields" class="quiz-fields-hidden">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="timeLimit" class="form-label">Time Limit (minutes)</label>
+                                    <input type="number" class="form-control" id="timeLimit" min="1" value="30">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="attempts" class="form-label">Allowed Attempts</label>
+                                    <input type="number" class="form-control" id="attempts" min="1" value="1">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="questionCount" class="form-label">Number of Questions</label>
+                                    <input type="number" class="form-control" id="questionCount" min="1" value="10" readonly>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="shuffleQuestions">
+                                    <label class="form-check-label" for="shuffleQuestions">
+                                        Shuffle Questions
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="showResults">
+                                    <label class="form-check-label" for="showResults">
+                                        Show Results Immediately
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Quiz Questions Management -->
+                            <div class="mb-3">
+                                <label class="form-label">Quiz Questions</label>
+                                <div id="quizQuestionsList"></div>
+                                <button type="button" class="btn btn-outline-primary mt-2" id="addQuestionBtn">
+                                    <span class="material-symbols-outlined align-middle">add</span> Add Question
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Due Date and Time -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="dueDate" class="form-label">Due Date *</label>
+                                <input type="date" class="form-control" id="dueDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="dueTime" class="form-label">Due Time *</label>
+                                <input type="time" class="form-control" id="dueTime" required>
+                            </div>
+                        </div>
+
+                        <!-- Availability -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="availableFrom" class="form-label">Available From</label>
+                                <input type="datetime-local" class="form-control" id="availableFrom">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="availableUntil" class="form-label">Available Until</label>
+                                <input type="datetime-local" class="form-control" id="availableUntil">
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="status" id="draftStatus" value="draft" checked>
+                                <label class="btn btn-outline-secondary" for="draftStatus">Draft</label>
+                                <input type="radio" class="btn-check" name="status" id="publishStatus" value="published">
+                                <label class="btn btn-outline-success" for="publishStatus">Publish Now</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveContent()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
