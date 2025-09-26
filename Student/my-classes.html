@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduPortal - My Classes</title>
+  <link rel="icon" href="../frontend/assets/images/EduLMS-icon.ico" />
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Local stylesheet -->
+  <link rel="stylesheet" href="./Styles/my-classes.css">
+</head>
+<body>
+  <div class="app">
+   
+   <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon"><img src="../frontend/assets/images/EduLMS-icon.ico" alt="EduLMS" width="36" height="36"></div>
+        <div class="brand-text">
+          <div class="brand-title">EduPortal</div>
+          <div class="brand-sub">Student Dashboard</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input type="search" placeholder="Search everything..." id="globalSearch">
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link " href="dashboard.html">Dashboard</a>
+        <a class="nav-link active" href="my-classes.html">My Classes</a>
+        <a class="nav-link" href="assignments.html">Assignments</a>
+        <a class="nav-link" href="grades.html">Grades</a>
+        <a class="nav-link" href="attendance.html">Attendance</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="messages.html">Messages</a>
+        <a class="nav-link" href="library.html">Library</a>
+        <a class="nav-link" href="study-tools.html">Study Tools</a>
+        <a class="nav-link" href="achievements.html">Achievements</a>
+        <a class="nav-link" href="profile.html">My Profile</a>
+      </nav>
+
+      <div class="profile">
+        <div class="profile-avatar">SJ</div>
+        <div class="profile-info">
+          <div class="name">Sarah Johnson</div>
+          <div class="role">Junior, Computer Science</div>
+        </div>
+      </div>
+
+      <div class="sidebar-cta">
+        <button class="setting-btn">Settings</button>
+        <button class="signout-btn">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+      <header class="topbar">
+        <button id="mobileToggle" class="mobile-toggle"><span class="material-symbols-outlined">menu</span></button>
+        <h1 class="page-title"><span class="material-symbols-outlined">menu_book</span> My Classes</h1>
+        <div class="top-actions">
+          <div class="search-inline">
+            <input id="classSearch" placeholder="Search classes..." />
+          </div>
+          <div class="filters">
+            <select id="statusFilter" aria-label="Filter classes by status">
+              <option value="all">Filter by status</option>
+              <option value="active">Active</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="completed">Completed</option>
+            </select>
+            <button id="browseBtn" class="btn-primary">Browse Courses</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="classes-grid" id="classesGrid">
+          <!-- cards rendered by JS -->
+        </section>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script src="./Scripts/my-classes.js"></script>
+</body>
+</html>

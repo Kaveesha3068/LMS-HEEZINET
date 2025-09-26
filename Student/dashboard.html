@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduPortal - Student Dashboard</title>
+  <link rel="icon" href="../frontend/assets/images/EduLMS-icon.ico" />
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Local stylesheet -->
+  <link rel="stylesheet" href="./Styles/dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon"><img src="../frontend/assets/images/EduLMS-icon.ico" alt="EduLMS" width="36" height="36"></div>
+        <div class="brand-text">
+          <div class="brand-title">EduPortal</div>
+          <div class="brand-sub">Student Dashboard</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input type="search" placeholder="Search everything..." id="globalSearch">
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link active" href="dashboard.html"> Dashboard</a>
+        <a class="nav-link" href="my-classes.html">My Classes</a>
+        <a class="nav-link" href="assignments.html">Assignments </a>
+        <a class="nav-link" href="grades.html">Grades</a>
+        <a class="nav-link" href="attendance.html">Attendance</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="messages.html">Messages</a>
+        <a class="nav-link" href="library.html">Library</a>
+        <a class="nav-link" href="study-tools.html">Study Tools</a>
+        <a class="nav-link" href="achievements.html">Achievements</a>
+        <a class="nav-link" href="profile.html">My Profile</a>
+      </nav>
+
+      <div class="profile">
+        <div class="profile-avatar">SJ</div>
+        <div class="profile-info">
+          <div class="name">Sarah Johnson</div>
+          <div class="role">Junior, Computer Science</div>
+        </div>
+      </div>
+
+      <div class="sidebar-cta">
+        <button class="setting-btn">Settings</button>
+        <button class="signout-btn">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+      <header class="topbar">
+  <button id="mobileToggle" class="mobile-toggle"><span class="material-symbols-outlined">menu</span></button>
+        <h1 class="page-title">Dashboard</h1>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle"><span class="material-symbols-outlined">light_mode</span></button>
+          <button class="icon-btn" id="notifBtn"><span class="material-symbols-outlined">notifications</span><span class="notif-count">2</span></button>
+          <div class="top-avatar">SJ</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="hero card">
+          <h2>Welcome back, Sarah!</h2>
+          <p id="today">Friday, September 19, 2025</p>
+        </section>
+
+        <section class="stats-row">
+          <div class="card stat">
+            <div class="label">Enrolled Classes</div>
+            <div class="value">6</div>
+            <div class="small">This semester</div>
+          </div>
+          <div class="card stat">
+            <div class="label">Attendance Rate</div>
+            <div class="value">94% <span class="delta">+2%</span></div>
+          </div>
+          <div class="card stat">
+            <div class="label">Pending Assignments</div>
+            <div class="value">3</div>
+            <div class="small">Due this week</div>
+          </div>
+          <div class="card stat">
+            <div class="label">Next Class</div>
+            <div class="value">2:00 PM</div>
+            <div class="small">Physics Lab</div>
+          </div>
+        </section>
+
+        <section class="quick-actions card">
+          <div class="qa-left">
+            <button class="primary"><span class="material-symbols-outlined">video_library</span>Join Current Class</button>
+          </div>
+          <div class="qa-right">
+            <button><span class="material-symbols-outlined">event</span>View Schedule</button>
+            <button><span class="material-symbols-outlined">chat</span>Check Messages</button>
+          </div>
+        </section>
+
+        <section class="panels">
+          <div class="card recent">
+            <h3>Recent Activity</h3>
+            <ul class="activity-list">
+              <li>
+                <span class="icon"><span class="material-symbols-outlined">assignment</span></span>
+                <div class="meta">
+                  <div class="title">Physics Lab Report <span class="tag pending">pending</span></div>
+                  <div class="desc">Submit your lab report for Experiment 3</div>
+                  <div class="time">2 hours ago</div>
+                </div>
+              </li>
+              <li>
+                <span class="icon"><span class="material-symbols-outlined">check_circle</span></span>
+                <div class="meta">
+                  <div class="title">Mathematics Quiz <span class="tag completed">completed</span></div>
+                  <div class="desc">Grade received: 92/100</div>
+                  <div class="time">5 hours ago</div>
+                </div>
+              </li>
+              <li>
+                <span class="icon"><span class="material-symbols-outlined">campaign</span></span>
+                <div class="meta">
+                  <div class="title">Library Hours Update</div>
+                  <div class="desc">Extended hours during exam week</div>
+                  <div class="time">1 day ago</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card events">
+            <h3>Upcoming Events</h3>
+            <ul class="events-list">
+              <li>
+                <div class="ev-title">Physics Midterm Exam</div>
+                <div class="ev-meta">Today • 2:00 PM • Room 201</div>
+              </li>
+              <li>
+                <div class="ev-title">Chemistry Lab</div>
+                <div class="ev-meta">Tomorrow • 10:00 AM • Lab B-3</div>
+              </li>
+              <li>
+                <div class="ev-title">English Essay Due</div>
+                <div class="ev-meta">Oct 22 • 11:59 PM • Online submission</div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+      </div>
+
+      <footer class="footer">&copy; 2025 EduPortal</footer>
+    </div>
+  </div>
+
+  <script src="./Scripts/dashboard.js"></script>
+</body>
+</html>

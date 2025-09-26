@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduPortal - Attendance</title>
+  <link rel="icon" href="../frontend/assets/images/EduLMS-icon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link rel="stylesheet" href="./Styles/attendance.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon"><img src="../frontend/assets/images/EduLMS-icon.ico" alt="EduLMS" width="36" height="36"></div>
+        <div class="brand-text">
+          <div class="brand-title">EduPortal</div>
+          <div class="brand-sub">Student Dashboard</div>
+        </div>
+      </div>
+
+      <div class="search"><input placeholder="Search everything..." /></div>
+
+    <nav class="nav">
+        <a class="nav-link " href="dashboard.html"> Dashboard</a>
+        <a class="nav-link" href="my-classes.html">My Classes</a>
+        <a class="nav-link" href="assignments.html">Assignments </a>
+        <a class="nav-link " href="grades.html">Grades</a>
+        <a class="nav-link active" href="attendance.html">Attendance</a>
+        <a class="nav-link" href="#">Calendar</a>
+        <a class="nav-link" href="#">Messages</a>
+        <a class="nav-link" href="#">Library</a>
+        <a class="nav-link" href="#">Study Tools</a>
+        <a class="nav-link" href="#">Achievements</a>
+        <a class="nav-link" href="#">My Profile</a>
+      </nav>
+      <div class="profile">
+        <div class="profile-avatar">SJ</div>
+        <div class="profile-info"><div class="name">Sarah Johnson</div><div class="role">Junior, Computer Science</div></div>
+      </div>
+
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title"><span class="material-symbols-outlined">poll</span> Attendance</h1>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle"><span class="material-symbols-outlined">light_mode</span></button>
+          <button class="icon-btn" id="notifBtn"><span class="material-symbols-outlined">notifications</span><span class="notif-count">2</span></button>
+          <div class="top-avatar">SJ</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="hero">
+          <h2>Attendance</h2>
+          <p class="sub">Track your class attendance</p>
+        </section>
+
+        <section class="kpis">
+          <div class="kpi card">
+            <div class="kpi-title">Overall Attendance</div>
+            <div class="kpi-circle" id="overallCircle">
+              <svg viewBox="0 0 36 36" class="circular-chart"><path class="circle-bg" d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 1 0 0-31.831"/><path id="circleProgress" class="circle" stroke-dasharray="94,100" d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 1 0 0-31.831"/></svg>
+              <div class="circle-label"><div id="overallPct">94%</div></div>
+            </div>
+          </div>
+
+          <div class="kpi card">
+            <div class="kpi-title">Classes Attended</div>
+            <div class="kpi-value" id="classesAttended">42</div>
+          </div>
+
+          <div class="kpi card">
+            <div class="kpi-title">Classes Missed</div>
+            <div class="kpi-value" id="classesMissed">2</div>
+          </div>
+
+          <div class="kpi card">
+            <div class="kpi-title">Late Arrivals</div>
+            <div class="kpi-value" id="lateArrivals">1</div>
+          </div>
+        </section>
+
+        <div class="grid">
+          <div class="panel calendar-panel">
+            <div class="panel-head"><h3>Attendance Calendar</h3><div class="filter">Filter by class ▾</div></div>
+            <div class="calendar" id="calendarPlaceholder"> <!-- calendar placeholder -->
+              <!-- We'll draw a simple calendar grid client-side for the current month -->
+            </div>
+          </div>
+
+          <div class="panel recent-panel">
+            <h3>Recent Attendance</h3>
+            <div id="recentList" class="recent-list"></div>
+          </div>
+
+          <div class="panel history-panel full">
+            <h3>Attendance History</h3>
+            <div class="table-wrap">
+              <table id="attendanceTable">
+                <thead><tr><th>Date</th><th>Class</th><th>Time</th><th>Status</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <footer class="footer">&copy; 2025 EduPortal</footer>
+    </div>
+  </div>
+
+  <script src="./Scripts/attendance.js"></script>
+</body>
+</html>

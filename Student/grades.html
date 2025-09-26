@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduPortal - Grades</title>
+  <link rel="icon" href="../frontend/assets/images/EduLMS-icon.ico" />
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <link rel="stylesheet" href="./Styles/grades.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon"><img src="../frontend/assets/images/EduLMS-icon.ico" alt="EduLMS" width="36" height="36"></div>
+        <div class="brand-text">
+          <div class="brand-title">EduPortal</div>
+          <div class="brand-sub">Student Dashboard</div>
+        </div>
+      </div>
+
+      <div class="search"><input placeholder="Search everything..." /></div>
+
+     <nav class="nav">
+        <a class="nav-link " href="dashboard.html"> Dashboard</a>
+        <a class="nav-link" href="my-classes.html">My Classes</a>
+        <a class="nav-link" href="assignments.html">Assignments</a>
+        <a class="nav-link active" href="grades.html">Grades</a>
+        <a class="nav-link" href="attendance.html">Attendance</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="messages.html">Messages</a>
+        <a class="nav-link" href="library.html">Library</a>
+        <a class="nav-link" href="study-tools.html">Study Tools</a>
+        <a class="nav-link" href="achievements.html">Achievements</a>
+        <a class="nav-link" href="profile.html">My Profile</a>
+      </nav>
+
+      <div class="profile">
+        <div class="profile-avatar">SJ</div>
+        <div class="profile-info"><div class="name">Sarah Johnson</div><div class="role">Junior, Computer Science</div></div>
+      </div>
+
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title"><span class="material-symbols-outlined">insights</span> Grades</h1>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle"><span class="material-symbols-outlined">light_mode</span></button>
+          <button class="icon-btn" id="notifBtn"><span class="material-symbols-outlined">notifications</span><span class="notif-count">2</span></button>
+          <div class="top-avatar">SJ</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="hero">
+          <h2>Academic Performance</h2>
+          <p class="sub">Track your grades and academic progress</p>
+        </section>
+
+        <section class="kpis">
+          <div class="kpi card">
+            <div class="kpi-title">Current GPA</div>
+            <div class="kpi-value" id="gpaVal">3.71</div>
+            <div class="kpi-sub small">↘ 3.6%</div>
+          </div>
+          <div class="kpi card">
+            <div class="kpi-title">Total Credits</div>
+            <div class="kpi-value" id="termCredits">20</div>
+            <div class="kpi-sub small">This semester</div>
+          </div>
+          <div class="kpi card">
+            <div class="kpi-title">Total Credits</div>
+            <div class="kpi-value" id="overallCredits">96</div>
+            <div class="kpi-sub small">Overall</div>
+          </div>
+          <div class="kpi card">
+            <div class="kpi-title">Dean's List</div>
+            <div class="kpi-value highlight">Dean's List</div>
+            <div class="kpi-sub small">Academic Standing</div>
+          </div>
+        </section>
+
+        <div class="tabs-row">
+          <div class="tabs">
+            <button class="tab active">Overview</button>
+            <button class="tab">Course Details</button>
+            <button class="tab">Trends</button>
+            <button class="tab">Analytics</button>
+          </div>
+          <div class="actions"><button class="btn-link">Export Transcript</button><select aria-label="Select semester"><option>Current Semester</option></select></div>
+        </div>
+
+        <div class="tab-contents">
+          <!-- Overview (default) -->
+          <div class="tab-content active" data-tab="Overview">
+            <div class="grid">
+              <div class="panel left">
+                <h3>Current Semester Grades</h3>
+                <div id="courseList" class="course-list"></div>
+              </div>
+              <div class="panel right">
+                <h3>Grade Distribution</h3>
+                <div class="chart-wrap">
+                  <canvas id="donut" width="420" height="320"></canvas>
+                  <div id="donutTooltip" role="status" aria-live="polite" class="donut-tooltip" hidden></div>
+                  <div id="donutLegend" class="legend"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course Details -->
+          <div class="tab-content" data-tab="Course Details">
+            <div class="panel full">
+              <h3>Detailed Course Performance</h3>
+              <div class="table-wrap">
+                <table id="courseTable">
+                  <thead>
+                    <tr><th>Course</th><th>Midterm</th><th>Assignments</th><th>Final</th><th>Overall</th><th>Credits</th><th>Actions</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trends -->
+          <div class="tab-content" data-tab="Trends">
+            <div class="panel full">
+              <h3>GPA Trend Over Time</h3>
+              <canvas id="trendChart" width="1000" height="300"></canvas>
+            </div>
+          </div>
+
+          <!-- Analytics -->
+          <div class="tab-content" data-tab="Analytics">
+            <div class="panel left">
+              <h3>Performance by Category</h3>
+              <div id="analyticsBars"></div>
+            </div>
+            <div class="panel right">
+              <h3>Grade Goals</h3>
+              <div class="goal-card">
+                <div class="goal-title">Target GPA: 4.0 <span class="badge small">In Progress</span></div>
+                <div class="progress small"><div id="goalFill" class="progress-fill"></div></div>
+                <div class="meta small">97.5% of target achieved</div>
+              </div>
+              <div class="goal-card muted"><div class="goal-title">Dean's List <span class="badge small success">Achieved</span></div><div class="meta small">Maintained for 3 consecutive semesters</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <footer class="footer">&copy; 2025 EduPortal</footer>
+    </div>
+  </div>
+
+  <script src="./Scripts/grades.js"></script>
+</body>
+</html>

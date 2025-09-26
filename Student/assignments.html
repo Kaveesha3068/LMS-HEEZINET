@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduPortal - Assignments</title>
+  <link rel="icon" href="../frontend/assets/images/EduLMS-icon.ico" />
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Local stylesheet -->
+  <link rel="stylesheet" href="./Styles/assignments.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar (shared) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon"><img src="../frontend/assets/images/EduLMS-icon.ico" alt="EduLMS" width="36" height="36"></div>
+        <div class="brand-text">
+          <div class="brand-title">EduPortal</div>
+          <div class="brand-sub">Student Dashboard</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input type="search" placeholder="Search everything..." id="globalSearch">
+      </div>
+
+       <nav class="nav">
+        <a class="nav-link " href="dashboard.html"> <span class="ms">Dashboard</span></a>
+        <a class="nav-link" href="my-classes.html">My Classes</a>
+        <a class="nav-link active" href="assignments.html">Assignments</a>
+        <a class="nav-link" href="grades.html">Grades</a>
+        <a class="nav-link" href="attendance.html">Attendance</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="messages.html">Messages <span class="badge">3</span></a>
+        <a class="nav-link" href="library.html">Library</a>
+        <a class="nav-link" href="study-tools.html">Study Tools</a>
+        <a class="nav-link" href="achievements.html">Achievements</a>
+        <a class="nav-link" href="profile.html">My Profile</a>
+      </nav>
+
+      <div class="profile">
+        <div class="profile-avatar">SJ</div>
+        <div class="profile-info">
+          <div class="name">Sarah Johnson</div>
+          <div class="role">Junior, Computer Science</div>
+        </div>
+      </div>
+
+      <div class="sidebar-cta">
+        <button class="setting-btn">Settings</button>
+        <button class="signout-btn">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title">
+          <span class="section-chip">
+            <span class="material-symbols-outlined">description</span>
+            <span class="section-count">3</span>
+          </span>
+          <span class="material-symbols-outlined">assignment</span>
+          Assignments
+        </h1>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle"><span class="material-symbols-outlined">light_mode</span></button>
+          <button class="icon-btn" id="notifBtn"><span class="material-symbols-outlined">notifications</span><span class="notif-count">2</span></button>
+          <div class="top-avatar">SJ</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="hero">
+          <h2>Assignments</h2>
+          <p class="sub">Manage your coursework and submissions</p>
+        </section>
+
+        <section class="stats-row">
+          <div class="stat card">
+            <div class="stat-left">
+              <div class="icon-chip pending"><span class="material-symbols-outlined">schedule</span></div>
+            </div>
+            <div class="stat-right">
+              <div class="num" id="pendingCount">0</div>
+              <div class="label">Pending</div>
+            </div>
+          </div>
+
+          <div class="stat card">
+            <div class="stat-left">
+              <div class="icon-chip submitted"><span class="material-symbols-outlined">upload</span></div>
+            </div>
+            <div class="stat-right">
+              <div class="num" id="submittedCount">0</div>
+              <div class="label">Submitted</div>
+            </div>
+          </div>
+
+          <div class="stat card">
+            <div class="stat-left">
+              <div class="icon-chip graded"><span class="material-symbols-outlined">done</span></div>
+            </div>
+            <div class="stat-right">
+              <div class="num" id="gradedCount">0</div>
+              <div class="label">Graded</div>
+            </div>
+          </div>
+
+          <div class="stat card progress-card">
+            <div class="stat-left">
+              <div class="percent-chip">40%</div>
+            </div>
+            <div class="stat-right">
+              <div class="label">Completion Rate</div>
+              <div class="progress small"><div class="progress-fill" id="completionFill"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="controls card">
+          <div class="tabs" aria-label="Assignment status tabs">
+            <button class="tab active" data-filter="all">All <span class="pill" id="allCount">0</span></button>
+            <button class="tab" data-filter="pending">Pending <span class="pill" id="pendingTabCount">0</span></button>
+            <button class="tab" data-filter="submitted">Submitted <span class="pill" id="submittedTabCount">0</span></button>
+            <button class="tab" data-filter="graded">Graded <span class="pill" id="gradedTabCount">0</span></button>
+          </div>
+
+          <div class="search-filter">
+            <input id="assignSearch" placeholder="Search assignments..." />
+            <select id="courseFilter" aria-label="Filter by course">
+              <option value="all">Course</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="assign-grid" id="assignGrid">
+          <!-- assignment cards rendered by JS -->
+        </section>
+
+      </div>
+
+      <footer class="footer">&copy; 2025 EduPortal</footer>
+    </div>
+  </div>
+
+  <script src="./Scripts/assignments.js"></script>
+</body>
+</html>

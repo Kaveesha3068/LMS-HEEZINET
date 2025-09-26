@@ -1,0 +1,90 @@
+:root{--bg:#0f1720;--panel:#0f1726;--muted:#9aa3b2;--accent:#2b7cff;--card:#0e1620;--text:#e6eef8}
+*{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+body{margin:0;background:var(--bg);color:var(--text)}
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:#0b1220;padding:20px;display:flex;flex-direction:column}
+.brand{display:flex;gap:12px;align-items:center}
+.brand-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#2563eb);display:flex;align-items:center;justify-content:center}
+.search input{width:100%;padding:10px;border-radius:8px;border:none;background:#0b1116;color:var(--muted);margin-top:12px}
+.nav{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.nav-link{padding:10px;border-radius:8px;color:var(--muted);text-decoration:none}
+.nav-link.active{background:#0b1116;color:#cfe6ff}
+.badge{background:#10b981;color:#061118;padding:4px 8px;border-radius:999px}
+.profile{margin-top:auto;display:flex;gap:12px;align-items:center}
+.profile-avatar{width:44px;height:44px;border-radius:50%;background:#12202a;display:flex;align-items:center;justify-content:center}
+
+.main{flex:1;display:flex;flex-direction:column}
+.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.page-title{display:flex;align-items:center;gap:10px;font-size:18px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{background:transparent;border:none;color:var(--muted);padding:8px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
+.notif-count{background:#ef4444;color:white;padding:2px 6px;border-radius:999px;font-size:11px;position:relative;margin-left:-8px}
+.content{padding:24px}
+.hero h2{margin:0;font-size:22px}
+.hero .sub{color:var(--muted);margin-top:6px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+.kpi{background:#0b1220;padding:18px;border-radius:12px}
+.kpi-title{color:var(--muted);font-size:13px}
+.kpi-value{font-size:28px;font-weight:700;margin-top:6px}
+.kpi-value.highlight{color:#60a5fa}
+.kpi-sub{color:var(--muted);margin-top:6px}
+
+/* KPI counter animation */
+.kpi-value{opacity:0;transform:translateY(6px);transition:all 420ms cubic-bezier(.2,.9,.3,1)}
+.kpi-value.animated{opacity:1;transform:translateY(0)}
+
+/* course list stagger */
+.course-item{opacity:0;transform:translateY(8px);transition:all 360ms cubic-bezier(.2,.9,.3,1)}
+.course-item.animated{opacity:1;transform:translateY(0)}
+
+/* donut tooltip */
+.donut-tooltip{position:absolute;background:#0b1116;color:var(--text);padding:8px 10px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,23,0.6);pointer-events:none;font-weight:700}
+.chart-wrap{position:relative}
+
+.tabs-row{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+.tabs{background:#0b1116;padding:8px;border-radius:10px}
+.tab{background:transparent;border:none;color:var(--muted);padding:10px 18px;border-radius:8px}
+.tab.active{background:#16202a;color:#e6eef8}
+.actions{display:flex;gap:10px;align-items:center}
+.btn-link{background:transparent;border:none;color:var(--muted)}
+
+.tab-contents{margin-top:18px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+.grid{display:grid;grid-template-columns:1fr 420px;gap:18px;margin-top:18px}
+.panel{background:#0b1220;padding:18px;border-radius:12px}
+.panel.left{min-height:420px}
+.panel.right{min-height:420px}
+.course-list{display:flex;flex-direction:column;gap:14px}
+.course-item{background:#0e1620;padding:14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
+.course-item .meta{color:var(--muted);font-size:13px}
+.grade-pill{background:#10b981;color:#03120b;padding:6px 10px;border-radius:8px;font-weight:700}
+
+.chart-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.legend{display:flex;gap:14px;align-items:center;margin-top:12px}
+.legend .item{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.legend .sw{width:12px;height:12px;border-radius:3px}
+
+/* full width panel for table/trend */
+.panel.full{grid-column:1/-1}
+.table-wrap{overflow:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse}
+thead th{background:#0b1116;padding:14px;text-align:left;color:var(--muted)}
+tbody td{padding:16px;border-top:1px solid rgba(255,255,255,0.02)}
+.badge.small{background:#374151;color:#cfe6ff;padding:6px 10px;border-radius:999px;font-weight:600;margin-left:8px}
+.badge.small.success{background:#064e3b;color:white}
+
+/* trends canvas */
+#trendChart{width:100%;height:320px;background:transparent;border-radius:10px}
+
+/* analytics bars */
+#analyticsBars{display:flex;flex-direction:column;gap:16px;margin-top:12px}
+.bar-row{display:flex;align-items:center;gap:12px}
+.bar-row .label{width:160px;color:var(--muted)}
+.bar{flex:1;height:12px;background:rgba(255,255,255,0.03);border-radius:8px;position:relative}
+.bar .fill{height:100%;background:linear-gradient(90deg,#60a5fa,#2b7cff);border-radius:8px;width:0%;transition:width 900ms cubic-bezier(.2,.9,.3,1)}
+.goal-card{background:#0b1220;padding:14px;border-radius:10px;margin-top:12px}
+
+@media(max-width:1100px){.grid{grid-template-columns:1fr}}
